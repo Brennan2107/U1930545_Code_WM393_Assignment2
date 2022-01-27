@@ -4,9 +4,10 @@
         <div class="card-header">
             Discussion Board
             <div class="btn-group float-right">
+                {% if current_user.is_admin %}
                 <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Action
-                </button>
+                </button> {% endif %}
                 <div class="dropdown-menu">
                     <a class="dropdown-item" href="{{ url_for('form') }}">Write</a>
                 </div>

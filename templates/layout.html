@@ -18,7 +18,8 @@
 
 <body style="min-height: 75rem; padding-top: 4.5rem;">
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <a class="navbar-brand" href="#">Sample Discusion Board</a>
+        <a class="navbar-brand" href="#">Sample Discusion Board</a> {% if current_user.is_authenticated %}
+        <a class="navbar-brand float-right" href="{{ url_for('logout') }}">Logout</a> {% endif %}
     </nav>
 
     {% block content %}{% endblock content %}

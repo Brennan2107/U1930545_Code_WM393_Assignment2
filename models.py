@@ -1,4 +1,5 @@
-from datetime import datetime
+from datetime import date, datetime
+from flask_login import UserMixin
 
 class Discussion:
 
@@ -36,4 +37,6 @@ class Post:
         return aPost
 
 
+class User(UserMixin):
+    pass
 
