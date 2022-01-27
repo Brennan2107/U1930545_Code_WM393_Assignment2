@@ -192,17 +192,3 @@ def deletepost(indexID, postID):
     aDManager.deletePost(indexID, postID)
     return redirect(url_for('list', indexID=indexID))    
 
-@app.route('/messages')
-@login_required
-def messages():
-  return 'Messages'
-
-@app.route('/')
-@login_required
-def index():
-  return render_template('index.html')
-
-@app.route('/messages')
-@login_required
-def messages():
-  return 'Messages'

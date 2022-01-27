@@ -9,12 +9,41 @@
             {{ post.description }}
         </div>
         
+        <!--Notice Comments heading including Submit New Comment button !!!Need to update href for the button!!! -->
+
         <div class="card-header">
             Notice Comments
             <a class="btn btn-sm btn-primary float-right" href="{{ url_for('list', indexID=discussion.id) }}">Submit New Comment</a>
         </div>
         <div class="card-body">
-            {{ post.description }}
+            <label for="title">Enter New Comment</label>
+            <input type="text" class="form-control" id="title" name="title">
+        </div>
+
+        <div class="card-body">
+            <div class="row">
+                {% for discussion in discussions %}
+                <div class="card" style="margin:10px; width: 21rem; height:15rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ discussion.topic }}</h5>
+                        <small>{{ discussion.date }}</small>
+                        <p class="card-text">{{ discussion.description }}</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="{{ url_for('list', indexID=discussion.id) }}" class="btn btn-sm btn-primary">Go Discussion</a>
+                        <div class="btn-group float-right">
+                            <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-bars"></i>
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="{{ url_for('form', indexID=discussion.id) }}">Update</a>
+                                <a class="dropdown-item alertdiscussion" index_id="{{ discussion.id }}" href="#">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
         </div>
 
     </div>
