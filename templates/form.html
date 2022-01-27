@@ -1,0 +1,27 @@
+{% extends "layout.html" %} {% block content %}
+<section class="container">
+    <div class="card">
+        <form method="POST" action="{{ url_for('save') if discussion is none else  url_for('update', indexID=indexid) }}">
+            <div class="card-header">
+                Discussion - Write
+            </div>
+            <div class="card-body">
+
+                <div class="form-group">
+                    <label for="topic">Topic</label>
+                    <input type="text" class="form-control" id="topic" name="topic" value="{{ discussion.topic }}">
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea class="form-control" id="description" name="description" rows="10">{{ discussion.description }}</textarea>
+                </div>
+
+            </div>
+            <div class="card-footer">
+                <a class="btn btn-sm btn-secondary float-left" href="{{ url_for('discussion') }}">Cancel</a>
+                <input class="btn btn-sm btn-primary float-right" type="submit" id="submit" value="Save"> &nbsp;
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock content %}

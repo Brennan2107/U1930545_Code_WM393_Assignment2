@@ -1,0 +1,68 @@
+{% extends "layout.html" %} {% block content %}
+<section class="container">
+    <div class="card">
+        <div class="card-header">
+            Discussion Board
+            <div class="btn-group float-right">
+                <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Action
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="{{ url_for('form') }}">Write</a>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                {% for discussion in discussions %}
+                <div class="card" style="margin:10px; width: 21rem; height:15rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ discussion.topic }}</h5>
+                        <small>{{ discussion.date }}</small>
+                        <p class="card-text">{{ discussion.description }}</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="{{ url_for('list', indexID=discussion.id) }}" class="btn btn-sm btn-primary">Go Discussion</a>
+                        <div class="btn-group float-right">
+                            <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-bars"></i>
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="{{ url_for('form', indexID=discussion.id) }}">Update</a>
+                                <a class="dropdown-item alertdiscussion" index_id="{{ discussion.id }}" href="#">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Sweet Alert -->
+
+<link href="{{ url_for('static', filename='sweetalert2/sweetalert2.css') }}" rel="stylesheet">
+<script src="{{ url_for('static', filename='sweetalert2/sweetalert2.min.js') }}"></script>
+
+<script>
+    $(function() {
+        $('.alertdiscussion').click(function() {
+            var index_id = $(this).attr("index_id");
+            Swal.fire({
+                title: "Are you sure?",
+                text: "Do you want to delete this discussion!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes, delete it!",
+                cancelButtonText: "No, cancel!",
+                reverseButtons: true
+            }).then((result) => {
+                if (result.value) {
+                    window.location = "{{ url_for('delete', indexID=0) }}".replace(/0/, index_id);
+                }
+            });
+        });
+    });
+</script>
+{% endblock content %}
