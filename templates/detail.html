@@ -3,11 +3,38 @@
     <div class="card">
         <div class="card-header">
             {{ post.title }}
-            <a class="btn btn-sm btn-primary float-right" href="{{ url_for('list', indexID=discussion.id) }}">Go Back to Discussion</a>
+            <a class="btn btn-sm btn-primary float-right" href="{{ url_for('list', indexID=discussion.id) }}">Go Back to List</a>
         </div>
         <div class="card-body">
             {{ post.description }}
         </div>
+        
+        <div class="card-header">
+            Notice Comments
+            <a class="btn btn-sm btn-primary float-right" href="{{ url_for('list', indexID=discussion.id) }}">Submit New Comment</a>
+        </div>
+        <div class="card-body">
+            {{ post.description }}
+        </div>
+
     </div>
+
 </section>
+
+<!--Comments section-->
+
+
+<h4>Leave me a message</h4>
+
+<p>
+  You can leave me a message below
+</p>
+
+<div class="large-8 columns">
+<form action="/submit_message" method="post">
+  <input type="text" placeholder="Name" name="who">
+  <textarea placeholder="Enter your message here" name="message" cols="50" rows="4"></textarea>
+  <input type="submit" value="Submit">
+</form>
+</div>
 {% endblock content %}
