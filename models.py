@@ -43,7 +43,7 @@ class Post:
 class Comment:
     def toDic(self):
         # return {'id': self.id, 'comment': self.comment, 'date': self.date, 'replyStatus': self.replyStatus}
-        return {'id': self.id, 'comment': self.comment, 'date': self.date,'replies': self.replies, 'replyStatus': self.replyStatus}
+        return {'id': self.id, 'comment': self.comment, 'date': self.date,'replies': self.replies}
 
     #'replies': self.replies - need to add this back into toDic
 
@@ -55,7 +55,6 @@ class Comment:
         aComment.comment = row.get('comment')
         aComment.date = row.get('date') if row.get('date') is not None else datetime.today().strftime('%d %b %Y')
         aComment.replies = row.get('replies') if row.get('replies') is not None else []
-        aComment.replyStatus = 1 if row.get('replies') is not None else 0
 
         return aComment
        

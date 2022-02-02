@@ -27,8 +27,8 @@
     </form>
 
         <div class="card-body">
-            <table class="table table-striped">
-                <tr>
+            <table class="table">
+                <tr bgcolor=#DCDCDC>
                     <th>Student Comment</th>
                     <th>Date Comment Submitted</th>
                     {% if current_user.is_admin %}
@@ -36,8 +36,11 @@
                     {% endif %}
                 </tr>
                 {% for comment in post.comments %}
-                    {% if comment.replyStatus == 1 %}
-                        <tr bgcolor=#8FBC8F>
+                    {% if comment.replies == [] %}
+                        <tr bgcolor=#CD5C5C>
+                    {% else %} 
+                        <tr bgcolor=#8FBC8>
+                    {% endif %}
                             <td>{{ comment.comment }}</td>
                             <td>{{ comment.date }}</td>
                             {% if current_user.is_admin %}
@@ -48,20 +51,7 @@
                             </td>
                             {% endif %}
                         </tr>
-                    {% endif %}
-                    {% if comment.replyStatus == 0 %}
-                    <tr bgcolor=#CD5C5C>
-                        <td>{{ comment.comment }}</td>
-                        <td>{{ comment.date }}</td>
-                        {% if current_user.is_admin %}
-                        <td>
-                            <div class="btn-group">
-                                <a class="btn btn-sm btn-primary float-right" href="{{ url_for('reply', indexID=discussion.id, postID=post.id, commentID=comment.id) }}">Reply</a>
-                            </div>
-                        </td>
-                        {% endif %}
-                    </tr>
-                    {% endif %}    
+  
                 {% endfor %}
             </table>
         </div>
