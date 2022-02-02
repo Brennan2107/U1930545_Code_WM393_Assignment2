@@ -10,14 +10,60 @@
         </div>
         
         <!--Notice Comments heading including Submit New Comment button !!!Need to update href for the button!!! -->
-
+    <form method="POST" action="{{url_for('savecomment', indexID=discussion.id, postID=post.id)}}">
         <div class="card-header">
             Notice Comments
-            <a class="btn btn-sm btn-primary float-right" href="{{ url_for('list', indexID=discussion.id) }}">Submit New Comment</a>
+            {% if current_user.is_admin == false %}
+            <input class="btn btn-sm btn-primary float-right" type="submit" id="submit" value="Submit New Comment"> &nbsp;
+            {% endif %}
         </div>
+        {% if current_user.is_admin == false %}
         <div class="card-body">
+            <!--If user is a student they shouldn't see the add new comment bit they should only be able to see the Reply buttons-->
             <label for="title">Enter New Comment</label>
-            <input type="text" class="form-control" id="title" name="title">
+            <input type="text" class="form-control" id="comment" name="comment">
+        </div>
+        {% endif %}
+    </form>
+
+        <div class="card-body">
+            <table class="table table-striped">
+                <tr>
+                    <th>Student Comment</th>
+                    <th>Date Comment Submitted</th>
+                    {% if current_user.is_admin %}
+                    <th style="width:30px;"></th>
+                    {% endif %}
+                </tr>
+                {% for comment in post.comments %}
+                    {% if comment.replyStatus == 1 %}
+                        <tr bgcolor=#8FBC8F>
+                            <td>{{ comment.comment }}</td>
+                            <td>{{ comment.date }}</td>
+                            {% if current_user.is_admin %}
+                            <td>
+                                <div class="btn-group">
+                                    <a class="btn btn-sm btn-primary float-right" href="{{ url_for('reply', indexID=discussion.id, postID=post.id, commentID=comment.id) }}">Reply</a>
+                                </div>
+                            </td>
+                            {% endif %}
+                        </tr>
+                    {% endif %}
+                    {% if comment.replyStatus == 0 %}
+                    <tr bgcolor=#CD5C5C>
+                        <td>{{ comment.comment }}</td>
+                        <td>{{ comment.date }}</td>
+                        {% if current_user.is_admin %}
+                        <td>
+                            <div class="btn-group">
+                                <a class="btn btn-sm btn-primary float-right" href="{{ url_for('reply', indexID=discussion.id, postID=post.id, commentID=comment.id) }}">Reply</a>
+                            </div>
+                        </td>
+                        {% endif %}
+                    </tr>
+                    {% endif %}    
+                {% endfor %}
+            </table>
         </div>
 
         <div class="card-body">
@@ -50,20 +96,4 @@
 
 </section>
 
-<!--Comments section-->
-
-
-<h4>Leave me a message</h4>
-
-<p>
-  You can leave me a message below
-</p>
-
-<div class="large-8 columns">
-<form action="/submit_message" method="post">
-  <input type="text" placeholder="Name" name="who">
-  <textarea placeholder="Enter your message here" name="message" cols="50" rows="4"></textarea>
-  <input type="submit" value="Submit">
-</form>
-</div>
 {% endblock content %}

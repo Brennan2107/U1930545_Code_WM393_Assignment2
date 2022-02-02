@@ -3,7 +3,7 @@ from flask import Flask
 from flask import render_template, request, redirect, url_for
 from flask_login import LoginManager, login_required, login_user, logout_user, current_user
 from jsondb import DiscussionManager
-from models import Post, User, Discussion
+from models import Post, User, Discussion, Comment, Reply
 
 users = [
     {'tutor@warwick.ac.uk': {'password': '1111', 'is_admin': True }},
@@ -77,7 +77,7 @@ def logout():
     return redirect(url_for('login'))
 
 
-
+# renders the discussion board main menu
 @app.route('/')
 @app.route('/discussion')
 @login_required
@@ -86,7 +86,7 @@ def discussion():
     discussions = aDManager.getDiscussions()
     return render_template('discussion.html', discussions=discussions)
 
-
+# renders the posts list for a specific discussion board
 @app.route('/list/<int:indexID>')
 @login_required
 def list(indexID):
@@ -94,7 +94,7 @@ def list(indexID):
     discussion = aDManager.getDiscussion(indexID)
     return render_template('list.html', discussion=discussion)
 
-
+# renders the detail view for a specific post on a specific discussion board
 @app.route('/detail/<int:indexID>/<int:postID>')
 @login_required
 def detail(indexID, postID):
@@ -106,7 +106,7 @@ def detail(indexID, postID):
 
     return redirect(url_for('list'))
 
-
+# renders the form view to allow tutors to be able to create and modify discussion board
 @app.route('/form')
 @app.route('/form/<int:indexID>')
 @login_required
@@ -118,7 +118,7 @@ def form(indexID=None):
 
     return render_template('form.html', indexid=indexID, discussion=aDiscussion)
 
-
+# renders the formpost view to be able to create a new post on a specific board
 @app.route('/formpost/<int:indexID>')
 @app.route('/formpost/<int:indexID>/<int:postID>')
 @login_required
@@ -192,3 +192,45 @@ def deletepost(indexID, postID):
     aDManager.deletePost(indexID, postID)
     return redirect(url_for('list', indexID=indexID))    
 
+
+# When Reply button is clicked for a specific student's comment on a specific notice on a specific board, the specific replies window is opened for that comment
+
+
+# renders the reply window
+@app.route('/reply/<int:indexID>/<int:postID>/<int:commentID>')
+@login_required
+def reply(indexID, postID, commentID):
+    aDManager = DiscussionManager()
+    aDiscussion = aDManager.getDiscussion(indexID)
+    if aDiscussion is not None:
+        aPost = aDManager.getDiscussionPost(indexID, postID)
+        aComment = aDManager.getNoticeComments(indexID, postID, commentID)
+        return render_template('reply.html', discussion=aDiscussion, post=aPost, comment=aComment)
+
+    return redirect(url_for('detail'))
+
+
+
+
+
+
+# Triggers the savecomment for a new comment to a post
+@app.route('/savecomment/<int:indexID>/<int:postID>', methods=['GET', 'POST'])
+@login_required
+def savecomment(indexID, postID):
+    aComment = Comment.populate(request.form)
+    aDManager = DiscussionManager()
+    aDManager.insertComment(indexID, postID, aComment)
+    # Change this to redirect to detail page
+    return redirect(url_for('detail', indexID=indexID, postID=postID))
+
+
+# Triggers the savereply for a new reply to a comment
+@app.route('/savereply/<int:indexID>/<int:postID>/<int:commentID>', methods=['GET', 'POST'])
+@login_required
+def savereply(indexID, postID, commentID):
+    aReply = Reply.populate(request.form)
+    aDManager = DiscussionManager()
+    aDManager.insertReply(indexID, postID, commentID, aReply)
+    # Change this to redirect to detail page
+    return redirect(url_for('reply', indexID=indexID, postID=postID, commentID=commentID))    
