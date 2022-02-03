@@ -15,7 +15,13 @@
                     <label for="description">Description</label>
                     <textarea class="form-control" id="description" name="description" rows="10">{{ post.description }}</textarea>
                 </div>
-
+                <label for="noticePriority">Set priority level for Notice:</label>
+                <select name="noticePriority" id="noticePriority">
+                    <option value="N/A">N/A</option>
+                    <option value="High">High</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Low">Low</option>
+                </select>
             </div>
             <div class="card-footer">
                 <a class="btn btn-sm btn-secondary float-left" href="{{ url_for('list', indexID=discussion.id) }}">Cancel</a>

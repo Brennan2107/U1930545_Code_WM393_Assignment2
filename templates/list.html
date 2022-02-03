@@ -2,7 +2,7 @@
 <section class="container">
     <div class="card">
         <div class="card-header">
-            Topic: {{ discussion.topic }}
+            Notices Page | {{ discussion.topic }}
             <div class="btn-group float-right">
                 {% if current_user.is_admin %}
                 <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -15,40 +15,172 @@
             <a style="margin-right:10px;" class="btn btn-sm btn-primary float-right" href="{{ url_for('discussion') }}">Go Back to Discussion</a>
         </div>
         <div class="card-body">
-            <table class="table table-striped">
-                <tr>
-                    <th>Title</th>
-                    <th>Name</th>
-                    <th>Date</th>
-                    <th>Count</th>
-                    {% if current_user.is_admin %}
-                    <th style="width:30px;"></th>
-                    {% endif %}
+
+            
+            <!-- High Priority Table -->
+            <table class="table" border="3" bordercolor=#CD5C5C width="100%">
+                <col style="width:88%">
+	            <col style="width:12%">
+                <tr bgcolor=#CD5C5C>
+                    <td colspan="5">High Priority Notices</td>
                 </tr>
-                {% for post in discussion.posts %}
-                <tr>
-                    <td>
-                        <a href="{{ url_for('detail', indexID=discussion.id, postID=post.id) }}">{{ post.title }}</a>
-                    </td>
-                    <td>{{ post.name }}</td>
-                    <td>{{ post.date }}</td>
-                    <td>{{ post.count }}</td>
-                    {% if current_user.is_admin %}
-                    <td>
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-bars"></i>
-                            </button>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="{{ url_for('formpost', indexID=discussion.id, postID=post.id) }}">Update</a>
-                                <a class="dropdown-item alertpost" index_id="{{ discussion.id }}" post_id="{{ post.id }}" href="#">Delete</a>
-                            </div>
-                        </div>
-                    </td>
-                    {% endif %}
-                </tr>
-                {% endfor %}
+                    <tr bgcolor=#DCDCDC>
+                        <th>Title</th>
+                        <th>Date</th>
+                        {% if current_user.is_admin %}
+                        <th style="width:30px;"></th>
+                        {% endif %}
+                    </tr>
+                    {% for post in discussion.posts %}
+                        {% if post.noticePriority == "High" %}
+                            <tr>
+                                <td>
+                                    <a href="{{ url_for('detail', indexID=discussion.id, postID=post.id) }}">{{ post.title }}</a>
+                                </td>
+                                <td>{{ post.date }}</td>
+                                {% if current_user.is_admin %}
+                                <td>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-bars"></i>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" href="{{ url_for('formpost', indexID=discussion.id, postID=post.id) }}">Update</a>
+                                            <a class="dropdown-item alertpost" index_id="{{ discussion.id }}" post_id="{{ post.id }}" href="#">Delete</a>
+                                        </div>
+                                    </div>
+                                </td>
+                                {% endif %}
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
             </table>
+
+
+            <!-- Medium Priority Table -->
+            <table class="table" border="3" bordercolor=#D2691E width="100%">
+                <col style="width:88%">
+	            <col style="width:12%">
+                <tr bgcolor=#D2691E>
+                    <td colspan="5">Medium Priority Notices</td>
+                </tr>
+                    <tr bgcolor=#DCDCDC>
+                        <th>Title</th>
+                        <th>Date</th>
+                        {% if current_user.is_admin %}
+                        <th style="width:30px;"></th>
+                        {% endif %}
+                    </tr>
+                    {% for post in discussion.posts %}
+                        {% if post.noticePriority == "Medium" %}
+                            <tr>
+                                <td>
+                                    <a href="{{ url_for('detail', indexID=discussion.id, postID=post.id) }}">{{ post.title }}</a>
+                                </td>
+                                <td>{{ post.date }}</td>
+                                {% if current_user.is_admin %}
+                                <td>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-bars"></i>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" href="{{ url_for('formpost', indexID=discussion.id, postID=post.id) }}">Update</a>
+                                            <a class="dropdown-item alertpost" index_id="{{ discussion.id }}" post_id="{{ post.id }}" href="#">Delete</a>
+                                        </div>
+                                    </div>
+                                </td>
+                                {% endif %}
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+            </table>
+
+
+
+
+            <!-- Low Priority Table -->
+            <table class="table" border="3" bordercolor=#4682B4 width="100%">
+                <col style="width:88%">
+	            <col style="width:12%">
+                <tr bgcolor=#4682B4>
+                    <td colspan="5">Low Priority Notices</td>
+                </tr>
+                    <tr bgcolor=#DCDCDC>
+                        <th>Title</th>
+                        <th>Date</th>
+                        {% if current_user.is_admin %}
+                        <th style="width:30px;"></th>
+                        {% endif %}
+                    </tr>
+                    {% for post in discussion.posts %}
+                        {% if post.noticePriority == "Low" %}
+                            <tr>
+                                <td>
+                                    <a href="{{ url_for('detail', indexID=discussion.id, postID=post.id) }}">{{ post.title }}</a>
+                                </td>
+                                <td>{{ post.date }}</td>
+                                {% if current_user.is_admin %}
+                                <td>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-bars"></i>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" href="{{ url_for('formpost', indexID=discussion.id, postID=post.id) }}">Update</a>
+                                            <a class="dropdown-item alertpost" index_id="{{ discussion.id }}" post_id="{{ post.id }}" href="#">Delete</a>
+                                        </div>
+                                    </div>
+                                </td>
+                                {% endif %}
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+            </table>
+
+
+
+
+            <!-- N/A Priority Priority Table -->
+            <table class="table" border="3" bordercolor=#708090 width="100%">
+                <col style="width:88%">
+	            <col style="width:12%">
+                <tr bgcolor=#708090>
+                    <td colspan="5">N/A Priority Notices</td>
+                </tr>
+                    <tr bgcolor=#DCDCDC>
+                        <th>Title</th>
+                        <th>Date</th>
+                        {% if current_user.is_admin %}
+                        <th style="width:30px;"></th>
+                        {% endif %}
+                    </tr>
+                    {% for post in discussion.posts %}
+                        {% if post.noticePriority == "N/A" %}
+                            <tr>
+                                <td>
+                                    <a href="{{ url_for('detail', indexID=discussion.id, postID=post.id) }}">{{ post.title }}</a>
+                                </td>
+                                <td>{{ post.date }}</td>
+                                {% if current_user.is_admin %}
+                                <td>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-bars"></i>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" href="{{ url_for('formpost', indexID=discussion.id, postID=post.id) }}">Update</a>
+                                            <a class="dropdown-item alertpost" index_id="{{ discussion.id }}" post_id="{{ post.id }}" href="#">Delete</a>
+                                        </div>
+                                    </div>
+                                </td>
+                                {% endif %}
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+            </table>
+
+
         </div>
     </div>
 </section>

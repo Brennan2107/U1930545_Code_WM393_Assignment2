@@ -125,6 +125,7 @@ class DiscussionManager:
                     if postID == _post['id']:
                         self.__discussions[_idx1]['posts'][_idx2]['title'] = aPost.title
                         self.__discussions[_idx1]['posts'][_idx2]['description'] = aPost.description
+                        self.__discussions[_idx1]['posts'][_idx2]['noticePriority'] = aPost.noticePriority
         self.saveDiscussions(self.__discussions)  
 
 

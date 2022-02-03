@@ -23,7 +23,7 @@ class Discussion:
 class Post:
     def toDic(self):
         return {'id': self.id, 'title': self.title, 'name': self.name, 
-                'date': self.date, 'count': self.count, 'description': self.description, 'comments': self.comments }
+                'date': self.date, 'count': self.count, 'description': self.description, 'noticePriority': self.noticePriority, 'comments': self.comments }
 
     # Define post metadata structure for storage
     @staticmethod
@@ -35,6 +35,7 @@ class Post:
         aPost.description = row.get('description')
         aPost.date = row.get('date') if row.get('date') is not None else datetime.today().strftime('%d %b %Y')  
         aPost.count = row.get('count') if row.get('count') is not None else 0
+        aPost.noticePriority = row.get('noticePriority')
         aPost.comments = row.get('comments') if row.get('posts') is not None else []
 
         return aPost
