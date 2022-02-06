@@ -1,0 +1,121 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /*Whole system will use the same font 'Poppins'*/
+    font-family: 'Poppins', sans-serif;
+}
+
+.container .card .card-header{
+    background: linear-gradient(150deg, #314ff7, #4600f1 100%);
+    font-weight: 900;
+    font-size: 30px;
+    color: white;
+
+
+
+}
+
+.container .card .highPriorityTable {
+    width: cover;
+    font-family: Ubuntu;
+    border-radius: 10px;
+    background: linear-gradient(180deg, #ff0000c7, #75010196 100%);
+    line-height: 50px;
+    color: white;
+    box-shadow: 5px 5px 10px rgba(255, 0, 0, 0.342);
+    margin-bottom: 30px;
+  }
+
+  .container .card .highPriorityTable tr:first-child td{
+    border-radius: 10px;
+    background: #ff0000;
+    font-weight: 500;
+    font-size: 23px;
+}
+
+/* Padding setting for entire highPriorityTable */
+.container .card .highPriorityTable tr td{
+    padding: 5px;
+}
+
+  .container .card .mediumPriorityTable {
+    width: cover;
+    padding: 4em;
+    font-family: Ubuntu;
+    border-radius: 10px;
+    background: linear-gradient(180deg, #ff8800c5, #7c24018e 100%);
+    line-height: 50px;
+    color: white;
+    box-shadow: 5px 5px 10px rgba(255, 115, 0, 0.637);
+    margin-bottom: 30px;
+  }  
+
+  .container .card .mediumPriorityTable tr:first-child td{
+    border-radius: 10px;
+    background: #ff8800;
+    font-weight: 500;
+    font-size: 23px;
+}
+
+/* Padding setting for entire mediumPriorityTable */
+.container .card .mediumPriorityTable tr td{
+    padding: 5px;
+}
+
+  .container .card .lowPriorityTable {
+    width: cover;
+    padding: 4em;
+    font-family: Ubuntu;
+    border-radius: 10px;
+    background: linear-gradient(180deg, #00b0e6d0, #003a698a 100%);
+    line-height: 50px;
+    color: white;
+    box-shadow: 5px 5px 10px rgba(0, 153, 255, 0.342);
+    margin-bottom: 30px;
+  }  
+
+  .container .card .lowPriorityTable tr:first-child td{
+    border-radius: 10px;
+    background: #00b0e6;
+    font-weight: 500;
+    font-size: 23px;
+}
+
+/* Padding setting for entire lowPriorityTable */
+.container .card .lowPriorityTable tr td{
+    padding: 5px;
+}
+
+  .container .card .naPriorityTable {
+    width: cover;
+    padding: 4em;
+    font-family: Ubuntu;
+    border-radius: 10px;
+    background: linear-gradient(180deg, #c2c2c2ec, #494949b9 100%);
+    line-height: 50px;
+    color: white;
+    box-shadow: 5px 5px 10px rgba(218, 218, 218, 0.342);
+    margin-bottom: 30px;
+  }  
+
+  .container .card .naPriorityTable tr:first-child td{
+    border-radius: 10px;
+    background: #c2c2c2;
+    font-weight: 500;
+    font-size: 23px;
+}
+
+/* Padding setting for entire naPriorityTable */
+.container .card .naPriorityTable tr td{
+    padding: 5px;
+}
+
+.container .card{
+    background: linear-gradient(180deg, #a1a1a1a2, #3131319d 100%) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}

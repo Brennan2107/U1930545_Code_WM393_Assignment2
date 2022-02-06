@@ -1,8 +1,9 @@
 {% extends "layout.html" %} {% block content %}
+<link href="{{ url_for('static', filename='sweetalert2/noticeListPageDesign.css') }}" rel="stylesheet" >
 <section class="container">
     <div class="card">
         <div class="card-header">
-            Notices Page | {{ discussion.topic }}
+            Notices List | {{ discussion.topic }}
             <div class="btn-group float-right">
                 {% if current_user.is_admin %}
                 <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -18,24 +19,16 @@
 
             
             <!-- High Priority Table -->
-            <table class="table" border="3" bordercolor=#CD5C5C width="100%">
+            <table class="highPriorityTable" width="100%">
                 <col style="width:88%">
 	            <col style="width:12%">
-                <tr bgcolor=#CD5C5C>
+                <tr>
                     <td colspan="5">High Priority Notices</td>
-                </tr>
-                    <tr bgcolor=#DCDCDC>
-                        <th>Title</th>
-                        <th>Date</th>
-                        {% if current_user.is_admin %}
-                        <th style="width:30px;"></th>
-                        {% endif %}
-                    </tr>
                     {% for post in discussion.posts %}
                         {% if post.noticePriority == "High" %}
                             <tr>
                                 <td>
-                                    <a href="{{ url_for('detail', indexID=discussion.id, postID=post.id) }}">{{ post.title }}</a>
+                                    <a style = "color:white" href="{{ url_for('detail', indexID=discussion.id, postID=post.id) }}">{{ post.title }}</a>
                                 </td>
                                 <td>{{ post.date }}</td>
                                 {% if current_user.is_admin %}
@@ -58,24 +51,15 @@
 
 
             <!-- Medium Priority Table -->
-            <table class="table" border="3" bordercolor=#D2691E width="100%">
+            <table class="mediumPriorityTable" width="100%">
                 <col style="width:88%">
 	            <col style="width:12%">
-                <tr bgcolor=#D2691E>
                     <td colspan="5">Medium Priority Notices</td>
-                </tr>
-                    <tr bgcolor=#DCDCDC>
-                        <th>Title</th>
-                        <th>Date</th>
-                        {% if current_user.is_admin %}
-                        <th style="width:30px;"></th>
-                        {% endif %}
-                    </tr>
                     {% for post in discussion.posts %}
                         {% if post.noticePriority == "Medium" %}
                             <tr>
                                 <td>
-                                    <a href="{{ url_for('detail', indexID=discussion.id, postID=post.id) }}">{{ post.title }}</a>
+                                    <a style = "color:white" href="{{ url_for('detail', indexID=discussion.id, postID=post.id) }}">{{ post.title }}</a>
                                 </td>
                                 <td>{{ post.date }}</td>
                                 {% if current_user.is_admin %}
@@ -100,24 +84,15 @@
 
 
             <!-- Low Priority Table -->
-            <table class="table" border="3" bordercolor=#4682B4 width="100%">
+            <table class="lowPriorityTable" width="100%">
                 <col style="width:88%">
 	            <col style="width:12%">
-                <tr bgcolor=#4682B4>
                     <td colspan="5">Low Priority Notices</td>
-                </tr>
-                    <tr bgcolor=#DCDCDC>
-                        <th>Title</th>
-                        <th>Date</th>
-                        {% if current_user.is_admin %}
-                        <th style="width:30px;"></th>
-                        {% endif %}
-                    </tr>
                     {% for post in discussion.posts %}
                         {% if post.noticePriority == "Low" %}
                             <tr>
                                 <td>
-                                    <a href="{{ url_for('detail', indexID=discussion.id, postID=post.id) }}">{{ post.title }}</a>
+                                    <a style = "color:white" href="{{ url_for('detail', indexID=discussion.id, postID=post.id) }}">{{ post.title }}</a>
                                 </td>
                                 <td>{{ post.date }}</td>
                                 {% if current_user.is_admin %}
@@ -142,24 +117,15 @@
 
 
             <!-- N/A Priority Priority Table -->
-            <table class="table" border="3" bordercolor=#708090 width="100%">
+            <table class="naPriorityTable" width="100%">
                 <col style="width:88%">
 	            <col style="width:12%">
-                <tr bgcolor=#708090>
                     <td colspan="5">N/A Priority Notices</td>
-                </tr>
-                    <tr bgcolor=#DCDCDC>
-                        <th>Title</th>
-                        <th>Date</th>
-                        {% if current_user.is_admin %}
-                        <th style="width:30px;"></th>
-                        {% endif %}
-                    </tr>
                     {% for post in discussion.posts %}
                         {% if post.noticePriority == "N/A" %}
                             <tr>
                                 <td>
-                                    <a href="{{ url_for('detail', indexID=discussion.id, postID=post.id) }}">{{ post.title }}</a>
+                                    <a style = "color:white" href="{{ url_for('detail', indexID=discussion.id, postID=post.id) }}">{{ post.title }}</a>
                                 </td>
                                 <td>{{ post.date }}</td>
                                 {% if current_user.is_admin %}
