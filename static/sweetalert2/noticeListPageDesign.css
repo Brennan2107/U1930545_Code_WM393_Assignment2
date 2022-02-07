@@ -8,13 +8,19 @@
 }
 
 .container .card .card-header{
-    background: linear-gradient(150deg, #314ff7, #4600f1 100%);
+    background: linear-gradient(150deg, #619eee, #0054f1 100%);
     font-weight: 900;
     font-size: 30px;
     color: white;
+}
 
 
-
+/* Padding and colour configuration for buttons */
+.btn-group-sm > .btn, .btn-sm {
+    padding: .75rem .45rem;
+    color: #fff;
+    background-color: #2265b1;
+    border-color: #04366b4f;
 }
 
 .container .card .highPriorityTable {

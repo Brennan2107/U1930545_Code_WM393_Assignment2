@@ -1,8 +1,29 @@
 {% extends "layout.html" %} {% block content %}
+<link href="{{ url_for('static', filename='sweetalert2/noticeCommentPage.css') }}" rel="stylesheet" >
 <section class="container">
     <div class="card">
-        <div class="card-header bg-danger text-white">
-            {{ post.title }} | {{ post.noticePriority }} Priority Level 
+
+    <!-- Header colour for High priority notice-->
+    {% if post.noticePriority == "High" %}
+        <div class="card-header" style="background: #ff0000;">
+    {% endif %}
+
+    <!-- Header colour for Medium priority notice-->
+    {% if post.noticePriority == "Medium" %}
+        <div class="card-header" style="background: #ff8800;">
+    {% endif %}
+
+    <!-- Header colour for Low priority notice-->
+    {% if post.noticePriority == "Low" %}
+        <div class="card-header" style="background: #00b0e6;">
+    {% endif %}
+
+    <!-- Header colour for N/A priority notice-->
+    {% if post.noticePriority == "N/A" %}
+        <div class="card-header" style="background: #c2c2c2;">
+    {% endif %}
+
+            {{ post.title }} | {{ post.noticePriority }} Priority
             <a class="btn btn-sm btn-primary float-right" href="{{ url_for('list', indexID=discussion.id) }}">Go Back to List</a>
         </div>
         <div class="card-body">
@@ -10,8 +31,26 @@
         </div>
                 <!--Notice Comments heading including Submit New Comment button !!!Need to update href for the button!!! -->
             <form method="POST" action="{{url_for('savecomment', indexID=discussion.id, postID=post.id)}}">
-                <div class="card-header">
-                    Notice Comments
+            <!-- Header colour for High priority notice-->
+            {% if post.noticePriority == "High" %}
+                <div class="card-header" style="background: linear-gradient(180deg, #ff0000, #ff000094 100%);">
+            {% endif %}
+
+            <!-- Header colour for Medium priority notice-->
+            {% if post.noticePriority == "Medium" %}
+                <div class="card-header" style="background: linear-gradient(180deg, #ff8800, #ff8800a4 100%);">
+            {% endif %}
+
+            <!-- Header colour for Low priority notice-->
+            {% if post.noticePriority == "Low" %}
+                <div class="card-header" style="background: linear-gradient(180deg, #00b0e6, #00b0e6ab 100%);">
+            {% endif %}
+
+            <!-- Header colour for N/A priority notice-->
+            {% if post.noticePriority == "N/A" %}
+                <div class="card-header" style="background: linear-gradient(180deg, #c2c2c2, #c2c2c2a2 100%);">
+            {% endif %}
+                    Comments
                     {% if current_user.is_admin == false %}
                     <input class="btn btn-sm btn-primary float-right" type="submit" id="submit" value="Submit New Comment"> &nbsp;
                     {% endif %}
@@ -19,28 +58,25 @@
                 {% if current_user.is_admin == false %}
                 <div class="card-body">
                     <!--If user is a student they shouldn't see the add new comment bit they should only be able to see the Reply buttons-->
-                    <label for="title">Enter New Comment</label>
+                    <label style= "color: white; font-weight: 500; font-size: 23px;" for="title">Enter New Comment</label>
                     <input type="text" class="form-control" id="comment" name="comment">
                 </div>
                 {% endif %}
             </form>
        
 
-                <div class="card-body">
-                    <table class="table">
-                        <tr bgcolor=#DCDCDC>
-                            <th>Student Comment</th>
-                            <th>Date Comment Submitted</th>
-                            {% if current_user.is_admin %}
-                            <th style="width:30px;"></th>
-                            {% endif %}
-                        </tr>
+            <div class="card-body">
+                <table class="table">
+                    <col style="width:68%">
+                    <col style="width:20%">
+                    <col style="width:12%">
+                    <tr>
+                        <td colspan="3">Submitted Comments</td>
                         {% for comment in post.comments %}
                             {% if comment.replies == [] %}
-                                <tr bgcolor=#CD5C5C>
                             {% else %} 
-                                <tr bgcolor=#8FBC8>
                             {% endif %}
+                                <tr>
                                     <td>{{ comment.comment }}</td>
                                     <td>{{ comment.date }}</td>
                                     {% if current_user.is_admin %}
@@ -50,39 +86,23 @@
                                         </div>
                                     </td>
                                     {% endif %}
+                            {% if comment.replies != [] and current_user.is_admin == false %}
+                                    <td>
+                                        <div class="btn-group">
+                                            <a class="btn btn-sm btn-primary float-left" href="{{ url_for('reply', indexID=discussion.id, postID=post.id, commentID=comment.id) }}">View Replies</a>
+                                        </div>
+                                    </td>
+                                
+                            {% endif %}
+                            {% if comment.replies == [] and current_user.is_admin == false %}
+                                    <td>
+                                    </td>
+                            {% endif %}
                                 </tr>
-        
-                        {% endfor %}
-                    </table>
-                </div>
+                    </tr>
+                    {% endfor %}
+                </table>
 
-                <div class="card-body">
-                    <div class="row">
-                        {% for discussion in discussions %}
-                        <div class="card" style="margin:10px; width: 21rem; height:15rem;">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ discussion.topic }}</h5>
-                                <small>{{ discussion.date }}</small>
-                                <p class="card-text">{{ discussion.description }}</p>
-                            </div>
-                            <div class="card-footer">
-                                <a href="{{ url_for('list', indexID=discussion.id) }}" class="btn btn-sm btn-primary">Go Discussion</a>
-                                <div class="btn-group float-right">
-                                    <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fas fa-bars"></i>
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="{{ url_for('form', indexID=discussion.id) }}">Update</a>
-                                        <a class="dropdown-item alertdiscussion" index_id="{{ discussion.id }}" href="#">Delete</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
 
-            </div>
-
-        </section>
-    {% endblock content %}
+</section>
+{% endblock content %}
