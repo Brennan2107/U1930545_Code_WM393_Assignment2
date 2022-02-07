@@ -1,21 +1,22 @@
 {% extends "layout.html" %} {% block content %}
+<link href="{{ url_for('static', filename='sweetalert2/createupdateNotice.css') }}" rel="stylesheet" >
 <section class="container">
     <div class="card">
         <form method="POST" action="{{ url_for('savepost', indexID=discussion.id) if post is none else  url_for('updatepost', indexID=discussion.id, postID=post.id) }}">
             <div class="card-header">
-                Board - Write
+                NOTICE CREATION WINDOW
             </div>
             <div class="card-body">
 
                 <div class="form-group">
-                    <label for="title">Tit2le</label>
+                    <label style= "color: white; font-weight: 500; font-size: 23px;" for="title" for="title">Notice Title</label>
                     <input type="text" class="form-control" id="title" name="title" value="{{ post.title }}">
                 </div>
                 <div class="form-group">
-                    <label for="description">Description</label>
+                    <label style= "color: white; font-weight: 500; font-size: 23px;" for="title" for="description">Notice Description</label>
                     <textarea class="form-control" id="description" name="description" rows="10">{{ post.description }}</textarea>
                 </div>
-                <label for="noticePriority">Set priority level for Notice:</label>
+                <label style= "color: white; font-weight: 500; font-size: 23px;" for="title" for="noticePriority">Notice Priority Level</label>
                 <select name="noticePriority" id="noticePriority">
                     <option value="N/A">N/A</option>
                     <option value="High">High</option>
@@ -25,7 +26,7 @@
             </div>
             <div class="card-footer">
                 <a class="btn btn-sm btn-secondary float-left" href="{{ url_for('list', indexID=discussion.id) }}">Cancel</a>
-                <input class="btn btn-sm btn-primary float-right" type="submit" id="submit" value="Save"> &nbsp;
+                <input class="btn btn-sm btn-primary float-right" type="submit" id="submit" value="Create New Notice"> &nbsp;
             </div>
         </form>
     </div>

@@ -6,12 +6,8 @@
             Notices List | {{ discussion.topic }}
             <div class="btn-group float-right">
                 {% if current_user.is_admin %}
-                <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Action
-                </button> {% endif %}
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="{{ url_for('formpost', indexID=discussion.id) }}">Write</a>
-                </div>
+                <a class="btn btn-sm btn-primary float-right" href="{{ url_for('formpost', indexID=discussion.id) }}">New Notice</a>
+                {% endif %}
             </div>
             <a  class="btn btn-sm btn-primary float-right" href="{{ url_for('discussion') }}">Go Back to Discussion</a>
         </div>

@@ -20,6 +20,7 @@
     font-weight: 900;
     font-size: 30px;
     color: white;
+    background: linear-gradient(150deg, #619eee, #0054f1 100%);
 }
 
 /* Padding and colour configuration for buttons */
@@ -34,7 +35,7 @@
     width: cover;
     font-family: Ubuntu;
     border-radius: 10px;
-    background: linear-gradient(180deg, #747474c7, #35353596 100%);
+    background: linear-gradient(180deg, #9e9e9ec7, #5f5f5f96 100%);
     line-height: 50px;
     color: white;
     box-shadow: 5px 5px 10px rgba(255, 255, 255, 0.342);
