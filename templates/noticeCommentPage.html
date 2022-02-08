@@ -24,7 +24,7 @@
     {% endif %}
 
             {{ notice.title }} | {{ notice.noticePriority }} Priority
-            <a class="btn btn-sm btn-primary float-right" href="{{ url_for('list', indexID=noticeBoard.id) }}">Go Back to List</a>
+            <a class="btn btn-sm btn-primary float-right" href="{{ url_for('noticeList', indexID=noticeBoard.id) }}">Go Back to Notice List</a>
         </div>
         <div class="card-body">
             {{ notice.description }}

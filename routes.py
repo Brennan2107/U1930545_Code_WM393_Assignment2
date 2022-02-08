@@ -87,42 +87,42 @@ def noticeBoardHomePage():
     return render_template('noticeBoardHomePage.html', noticeBoards=noticeBoards)
 
 # renders the posts list for a specific notice board
-@app.route('/list/<int:indexID>')
+@app.route('/noticeList/<int:indexID>')
 @login_required
-def list(indexID):
+def noticeList(indexID):
     aDManager = NoticeManager()
     noticeBoard = aDManager.getNoticeBoard(indexID)
-    return render_template('list.html', noticeBoard=noticeBoard)
+    return render_template('noticeList.html', noticeBoard=noticeBoard)
 
 # renders the detail view for a specific post on a specific notice board
-@app.route('/detail/<int:indexID>/<int:noticeID>')
+@app.route('/noticeCommentPage/<int:indexID>/<int:noticeID>')
 @login_required
-def detail(indexID, noticeID):
+def noticeCommentPage(indexID, noticeID):
     aDManager = NoticeManager()
     aNoticeBoard = aDManager.getNoticeBoard(indexID)
     if aNoticeBoard is not None:
         aNotice = aDManager.getNotice(indexID, noticeID)
-        return render_template('detail.html', noticeBoard=aNoticeBoard, notice=aNotice)
+        return render_template('noticeCommentPage.html', noticeBoard=aNoticeBoard, notice=aNotice)
 
-    return redirect(url_for('list'))
+    return redirect(url_for('noticeList'))
 
 # renders the form view to allow tutors to be able to create and modify notice board
-@app.route('/form')
-@app.route('/form/<int:indexID>')
+@app.route('/noticeBoardEditor')
+@app.route('/noticeBoardEditor/<int:indexID>')
 @login_required
-def form(indexID=None):
+def noticeBoardEditor(indexID=None):
     aNoticeBoard = None
     if indexID is not None:
         aDManager = NoticeManager()
         aNoticeBoard = aDManager.getNoticeBoard(indexID)
 
-    return render_template('form.html', indexid=indexID, noticeBoard=aNoticeBoard)
+    return render_template('noticeBoardEditor.html', indexid=indexID, noticeBoard=aNoticeBoard)
 
-# renders the formpost view to be able to create a new post on a specific board
-@app.route('/formpost/<int:indexID>')
-@app.route('/formpost/<int:indexID>/<int:noticeID>')
+# renders the noticeEditor view to be able to create a new post on a specific board
+@app.route('/noticeEditor/<int:indexID>')
+@app.route('/noticeEditor/<int:indexID>/<int:noticeID>')
 @login_required
-def formpost(indexID=None, noticeID=None):
+def noticeEditor(indexID=None, noticeID=None):
     aNoticeBoard = None
     aNotice = None
     if indexID is not None:
@@ -132,7 +132,7 @@ def formpost(indexID=None, noticeID=None):
             if _notice['id'] == noticeID:
                 aNotice = _notice
 
-    return render_template('formpost.html', noticeBoard=aNoticeBoard, notice=aNotice)
+    return render_template('noticeEditor.html', noticeBoard=aNoticeBoard, notice=aNotice)
 
 
 
@@ -156,7 +156,7 @@ def savenotice(indexID):
     aDManager = NoticeManager()
     aDManager.insertNotice(indexID, aNotice)
 
-    return redirect(url_for('list', indexID=indexID))
+    return redirect(url_for('noticeList', indexID=indexID))
 
 
 @app.route('/update/<int:indexID>', methods=['GET', 'POST'])
@@ -174,7 +174,7 @@ def updatenotice(indexID, noticeID):
     aNotice = Notice.populate(request.form)
     aDManager = NoticeManager()
     aDManager.updateNotice(indexID, noticeID, aNotice)
-    return redirect(url_for('list', indexID=indexID))
+    return redirect(url_for('noticeList', indexID=indexID))
 
 
 @app.route('/delete/<int:indexID>', methods=['GET'])
@@ -190,7 +190,7 @@ def delete(indexID):
 def deletenotice(indexID, noticeID):
     aDManager = NoticeManager()
     aDManager.deleteNotice(indexID, noticeID)
-    return redirect(url_for('list', indexID=indexID))    
+    return redirect(url_for('noticeList', indexID=indexID))    
 
 
 # When Reply button is clicked for a specific student's comment on a specific notice on a specific board, the specific replies window is opened for that comment
@@ -203,11 +203,11 @@ def reply(indexID, noticeID, commentID):
     aDManager = NoticeManager()
     aNoticeBoard = aDManager.getNoticeBoard(indexID)
     if aNoticeBoard is not None:
-        aNotice = aDManager.getNoticeNotice(indexID, noticeID)
+        aNotice = aDManager.getNotice(indexID, noticeID)
         aComment = aDManager.getNoticeComments(indexID, noticeID, commentID)
         return render_template('reply.html', noticeBoard=aNoticeBoard, notice=aNotice, comment=aComment)
 
-    return redirect(url_for('detail'))
+    return redirect(url_for('noticeCommentPage'))
 
 
 
@@ -222,7 +222,7 @@ def savecomment(indexID, noticeID):
     aDManager = NoticeManager()
     aDManager.insertComment(indexID, noticeID, aComment)
     # Change this to redirect to detail page
-    return redirect(url_for('detail', indexID=indexID, noticeID=noticeID))
+    return redirect(url_for('noticeCommentPage', indexID=indexID, noticeID=noticeID))
 
 
 # Triggers the savereply for a new reply to a comment

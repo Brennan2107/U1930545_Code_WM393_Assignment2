@@ -6,7 +6,7 @@
             Notices List | {{ noticeBoard.title }}
             <div class="btn-group float-right">
                 {% if current_user.is_admin %}
-                <a class="btn btn-sm btn-primary float-right" href="{{ url_for('formpost', indexID=noticeBoard.id) }}">New Notice</a>
+                <a class="btn btn-sm btn-primary float-right" href="{{ url_for('noticeEditor', indexID=noticeBoard.id) }}">New Notice</a>
                 {% endif %}
             </div>
             <a  class="btn btn-sm btn-primary float-right" href="{{ url_for('noticeBoardHomePage') }}">Go Back to Notice Home Page</a>
@@ -24,7 +24,7 @@
                         {% if notice.noticePriority == "High" %}
                             <tr>
                                 <td>
-                                    <a style = "color:white" href="{{ url_for('detail', indexID=noticeBoard.id, noticeID=notice.id) }}">{{ notice.title }}</a>
+                                    <a style = "color:white" href="{{ url_for('noticeCommentPage', indexID=noticeBoard.id, noticeID=notice.id) }}">{{ notice.title }}</a>
                                 </td>
                                 <td>{{ notice.date }}</td>
                                 {% if current_user.is_admin %}
@@ -34,7 +34,7 @@
                                             <i class="fas fa-bars"></i>
                                         </button>
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="{{ url_for('formpost', indexID=noticeBoard.id, noticeID=notice.id) }}">Update</a>
+                                            <a class="dropdown-item" href="{{ url_for('noticeEditor', indexID=noticeBoard.id, noticeID=notice.id) }}">Update</a>
                                             <a class="dropdown-item alertnotice" index_id="{{ noticeBoard.id }}" notice_id="{{ notice.id }}" href="#">Delete</a>
                                         </div>
                                     </div>
@@ -55,7 +55,7 @@
                         {% if notice.noticePriority == "Medium" %}
                             <tr>
                                 <td>
-                                    <a style = "color:white" href="{{ url_for('detail', indexID=noticeBoard.id, noticeID=notice.id) }}">{{ notice.title }}</a>
+                                    <a style = "color:white" href="{{ url_for('noticeCommentPage', indexID=noticeBoard.id, noticeID=notice.id) }}">{{ notice.title }}</a>
                                 </td>
                                 <td>{{ notice.date }}</td>
                                 {% if current_user.is_admin %}
@@ -65,7 +65,7 @@
                                             <i class="fas fa-bars"></i>
                                         </button>
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="{{ url_for('formpost', indexID=noticeBoard.id, noticeID=notice.id) }}">Update</a>
+                                            <a class="dropdown-item" href="{{ url_for('noticeEditor', indexID=noticeBoard.id, noticeID=notice.id) }}">Update</a>
                                             <a class="dropdown-item alertnotice" index_id="{{ noticeBoard.id }}" notice_id="{{ notice.id }}" href="#">Delete</a>
                                         </div>
                                     </div>
@@ -88,7 +88,7 @@
                         {% if notice.noticePriority == "Low" %}
                             <tr>
                                 <td>
-                                    <a style = "color:white" href="{{ url_for('detail', indexID=noticeBoard.id, noticeID=notice.id) }}">{{ notice.title }}</a>
+                                    <a style = "color:white" href="{{ url_for('noticeCommentPage', indexID=noticeBoard.id, noticeID=notice.id) }}">{{ notice.title }}</a>
                                 </td>
                                 <td>{{ notice.date }}</td>
                                 {% if current_user.is_admin %}
@@ -98,7 +98,7 @@
                                             <i class="fas fa-bars"></i>
                                         </button>
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="{{ url_for('formpost', indexID=noticeBoard.id, noticeID=notice.id) }}">Update</a>
+                                            <a class="dropdown-item" href="{{ url_for('noticeEditor', indexID=noticeBoard.id, noticeID=notice.id) }}">Update</a>
                                             <a class="dropdown-item alertnotice" index_id="{{ noticeBoard.id }}" notice_id="{{ notice.id }}" href="#">Delete</a>
                                         </div>
                                     </div>
@@ -122,7 +122,7 @@
                         {% if notice.noticePriority == "N/A" %}
                             <tr>
                                 <td>
-                                    <a style = "color:white" href="{{ url_for('detail', indexID=noticeBoard.id, noticeID=notice.id) }}">{{ notice.title }}</a>
+                                    <a style = "color:white" href="{{ url_for('noticeCommentPage', indexID=noticeBoard.id, noticeID=notice.id) }}">{{ notice.title }}</a>
                                 </td>
                                 <td>{{ notice.date }}</td>
                                 {% if current_user.is_admin %}
@@ -132,7 +132,7 @@
                                             <i class="fas fa-bars"></i>
                                         </button>
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="{{ url_for('formpost', indexID=noticeBoard.id, noticeID=notice.id) }}">Update</a>
+                                            <a class="dropdown-item" href="{{ url_for('noticeEditor', indexID=noticeBoard.id, noticeID=notice.id) }}">Update</a>
                                             <a class="dropdown-item alertnotice" index_id="{{ noticeBoard.id }}" notice_id="{{ notice.id }}" href="#">Delete</a>
                                         </div>
                                     </div>

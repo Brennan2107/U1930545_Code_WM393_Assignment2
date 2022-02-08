@@ -6,7 +6,7 @@
             NOTICE BOARD HOME PAGE
             <div class="btn-group float-right">
                 {% if current_user.is_admin %}
-                    <a href="{{ url_for('form') }}" class="btn btn-sm btn-primary">CREATE NEW NOTICE BOARD</a>
+                    <a href="{{ url_for('noticeBoardEditor') }}" class="btn btn-sm btn-primary">CREATE NEW NOTICE BOARD</a>
                 {% endif %}
             </div>
         </div>
@@ -15,11 +15,11 @@
                 {% for noticeBoard in noticeBoards %}
                 <div class="card" style="margin:10px; width: 21rem; height:15rem;">
                     <div class="card-body">
-                        <a href="{{ url_for('list', indexID=noticeBoard.id) }}" class="card-title">{{ noticeBoard.title }}</a>
+                        <a href="{{ url_for('noticeList', indexID=noticeBoard.id) }}" class="card-title">{{ noticeBoard.title }}</a>
                         <p class="card-text">{{ noticeBoard.moduleLink }}</p>
                     </div>
                     <div class="card-footer">
-                        <a class="btn btn-sm btn-primary" href="{{ url_for('form', indexID=noticeBoard.id) }}">Modify Board</a>
+                        <a class="btn btn-sm btn-primary" href="{{ url_for('noticeBoardEditor', indexID=noticeBoard.id) }}">Modify Board</a>
                         <a class="btn btn-sm btn-primary alertnoticeBoard" index_id="{{ noticeBoard.id }}" href="#">Delete Board</a>
                     </div>
                 </div>
