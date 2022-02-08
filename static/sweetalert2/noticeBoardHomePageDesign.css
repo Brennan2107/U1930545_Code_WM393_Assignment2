@@ -1,14 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3&display=swap');
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    /*Whole system will use the same font 'Poppins'*/
-    font-family: 'Poppins', sans-serif;
+    font-family: "Source Sans 3";
 }
-
-
-
 
 
 .container .card{
@@ -21,18 +17,22 @@
 
 
 .container .card .card-body .row .card .card-body{
-    background-color: white;
-    border-radius: 5x;
-    border: 5px solid pink;
+    background-image: url(NoticeBoardBackground.jpg);
+    border-radius: 5px;
     align-content: center;
+    text-align: center;
+    padding: 50px 0;
+    font-size: 30px;
+    box-shadow: 5px 5px 10px rgba(61, 14, 3, 0.74);
+    text-shadow:1px 1px 10px rgb(0, 60, 255), 1px 1px 10px rgb(0, 204, 255);
 }
 
 
 .container .card .card-body .row .card .card-footer{
-    background-color: rgb(63, 63, 63);
-    border-radius: 5x;
-    border: 5px solid pink;
+    background: linear-gradient(150deg, #00f7ff, #4c00ff 100%) no-repeat center center fixed;
+    border-radius: 5px;
     align-content: center;
+    box-shadow: 5px 5px 10px rgba(61, 14, 3, 0.74);
 }
 
 .container .card .card-header{
@@ -44,4 +44,8 @@
     background: purple;
     color: white;
     
+}
+
+.container .card .card-body .row .card .card-footer .btn{
+    width: 145px;
 }

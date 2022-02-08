@@ -15,13 +15,15 @@
                 {% for noticeBoard in noticeBoards %}
                 <div class="card" style="margin:10px; width: 21rem; height:15rem;">
                     <div class="card-body">
-                        <a href="{{ url_for('noticeList', indexID=noticeBoard.id) }}" class="card-title">{{ noticeBoard.title }}</a>
-                        <p class="card-text">{{ noticeBoard.moduleLink }}</p>
+                        <a style="color:white" href="{{ url_for('noticeList', indexID=noticeBoard.id) }}" class="card-title">{{ noticeBoard.title }}</a>
+                        <p style="color:white" class="card-text">{{ noticeBoard.moduleLink }}</p>
                     </div>
+                    {% if current_user.is_admin %}
                     <div class="card-footer">
                         <a class="btn btn-sm btn-primary" href="{{ url_for('noticeBoardEditor', indexID=noticeBoard.id) }}">Modify Board</a>
                         <a class="btn btn-sm btn-primary alertnoticeBoard" index_id="{{ noticeBoard.id }}" href="#">Delete Board</a>
                     </div>
+                    {% endif %}
                 </div>
                 {% endfor %}
             </div>
