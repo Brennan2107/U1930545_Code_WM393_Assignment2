@@ -1,26 +1,26 @@
 from datetime import date, datetime
 from flask_login import UserMixin
 
-class Discussion:
+class NoticeBoard:
 
     def toDic(self):
-        return {'id': self.id, 'topic': self.topic, 'description': self.description, 
-                'date': self.date, 'posts': self.posts }
+        return {'id': self.id, 'title': self.title, 'moduleLink': self.moduleLink, 
+                'date': self.date, 'notices': self.notices }
 
-    # Defines discussion board metadata structure for storage
+    # Defines notice board metadata structure for storage
     @staticmethod
     def populate(row):
-        aDiscussion = Discussion()
-        aDiscussion.id = row.get('id')
-        aDiscussion.topic = row.get('topic')
-        aDiscussion.description = row.get('description')
-        aDiscussion.date = row.get('date') if row.get('date') is not None else datetime.today().strftime('%Y-%m-%d')  
-        aDiscussion.posts = row.get('posts') if row.get('posts') is not None else []
+        aNoticeBoard = NoticeBoard()
+        aNoticeBoard.id = row.get('id')
+        aNoticeBoard.title = row.get('title')
+        aNoticeBoard.moduleLink = row.get('moduleLink')
+        aNoticeBoard.date = row.get('date') if row.get('date') is not None else datetime.today().strftime('%Y-%m-%d')  
+        aNoticeBoard.notices = row.get('notices') if row.get('notices') is not None else []
 
-        return aDiscussion
+        return aNoticeBoard
 
 
-class Post:
+class Notice:
     def toDic(self):
         return {'id': self.id, 'title': self.title, 'name': self.name, 
                 'date': self.date, 'count': self.count, 'description': self.description, 'noticePriority': self.noticePriority, 'comments': self.comments }
@@ -28,17 +28,17 @@ class Post:
     # Define post metadata structure for storage
     @staticmethod
     def populate(row):
-        aPost = Post()
-        aPost.id = row.get('id')
-        aPost.title = row.get('title')
-        aPost.name = row.get('name')
-        aPost.description = row.get('description')
-        aPost.date = row.get('date') if row.get('date') is not None else datetime.today().strftime('%d %b %Y')  
-        aPost.count = row.get('count') if row.get('count') is not None else 0
-        aPost.noticePriority = row.get('noticePriority')
-        aPost.comments = row.get('comments') if row.get('posts') is not None else []
+        aNotice = Notice()
+        aNotice.id = row.get('id')
+        aNotice.title = row.get('title')
+        aNotice.name = row.get('name')
+        aNotice.description = row.get('description')
+        aNotice.date = row.get('date') if row.get('date') is not None else datetime.today().strftime('%d %b %Y')  
+        aNotice.count = row.get('count') if row.get('count') is not None else 0
+        aNotice.noticePriority = row.get('noticePriority')
+        aNotice.comments = row.get('comments') if row.get('notices') is not None else []
 
-        return aPost
+        return aNotice
 
 
 class Comment:

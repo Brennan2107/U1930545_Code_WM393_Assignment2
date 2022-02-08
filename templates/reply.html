@@ -4,14 +4,14 @@
     <div class="card">
         <div class="card-header">
             Replies
-            <a class="btn btn-sm btn-primary float-right" href="{{ url_for('detail', indexID=discussion.id, postID=post.id) }}">Go Back to Comments</a>
+            <a class="btn btn-sm btn-primary float-right" href="{{ url_for('detail', indexID=noticeBoard.id, noticeID=notice.id) }}">Go Back to Comments</a>
         </div>
             <div class="card-body">
 
                 <p style= "color: white; font-weight: 300; font-size: 21px;" class="card-text">{{ comment.comment }}</p>
  
             </div>
-            <form method="POST" action="{{url_for('savereply', indexID=discussion.id, postID=post.id, commentID=comment.id)}}">
+            <form method="POST" action="{{url_for('savereply', indexID=noticeBoard.id, noticeID=notice.id, commentID=comment.id)}}">
                 <div class="card-header">
                     Notice Comments
                     {% if current_user.is_admin %}

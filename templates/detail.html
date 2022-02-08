@@ -4,50 +4,50 @@
     <div class="card">
 
     <!-- Header colour for High priority notice-->
-    {% if post.noticePriority == "High" %}
+    {% if notice.noticePriority == "High" %}
         <div class="card-header" style="background: #ff0000;">
     {% endif %}
 
     <!-- Header colour for Medium priority notice-->
-    {% if post.noticePriority == "Medium" %}
+    {% if notice.noticePriority == "Medium" %}
         <div class="card-header" style="background: #ff8800;">
     {% endif %}
 
     <!-- Header colour for Low priority notice-->
-    {% if post.noticePriority == "Low" %}
+    {% if notice.noticePriority == "Low" %}
         <div class="card-header" style="background: #00b0e6;">
     {% endif %}
 
     <!-- Header colour for N/A priority notice-->
-    {% if post.noticePriority == "N/A" %}
+    {% if notice.noticePriority == "N/A" %}
         <div class="card-header" style="background: #c2c2c2;">
     {% endif %}
 
-            {{ post.title }} | {{ post.noticePriority }} Priority
-            <a class="btn btn-sm btn-primary float-right" href="{{ url_for('list', indexID=discussion.id) }}">Go Back to List</a>
+            {{ notice.title }} | {{ notice.noticePriority }} Priority
+            <a class="btn btn-sm btn-primary float-right" href="{{ url_for('list', indexID=noticeBoard.id) }}">Go Back to List</a>
         </div>
         <div class="card-body">
-            {{ post.description }}
+            {{ notice.description }}
         </div>
                 <!--Notice Comments heading including Submit New Comment button !!!Need to update href for the button!!! -->
-            <form method="POST" action="{{url_for('savecomment', indexID=discussion.id, postID=post.id)}}">
+            <form method="POST" action="{{url_for('savecomment', indexID=noticeBoard.id, noticeID=notice.id)}}">
             <!-- Header colour for High priority notice-->
-            {% if post.noticePriority == "High" %}
+            {% if notice.noticePriority == "High" %}
                 <div class="card-header" style="background: linear-gradient(180deg, #ff0000, #ff000094 100%);">
             {% endif %}
 
             <!-- Header colour for Medium priority notice-->
-            {% if post.noticePriority == "Medium" %}
+            {% if notice.noticePriority == "Medium" %}
                 <div class="card-header" style="background: linear-gradient(180deg, #ff8800, #ff8800a4 100%);">
             {% endif %}
 
             <!-- Header colour for Low priority notice-->
-            {% if post.noticePriority == "Low" %}
+            {% if notice.noticePriority == "Low" %}
                 <div class="card-header" style="background: linear-gradient(180deg, #00b0e6, #00b0e6ab 100%);">
             {% endif %}
 
             <!-- Header colour for N/A priority notice-->
-            {% if post.noticePriority == "N/A" %}
+            {% if notice.noticePriority == "N/A" %}
                 <div class="card-header" style="background: linear-gradient(180deg, #c2c2c2, #c2c2c2a2 100%);">
             {% endif %}
                     Comments
@@ -72,7 +72,7 @@
                     <col style="width:6%">
                     <tr>
                         <td colspan="3">Submitted Comments</td>
-                        {% for comment in post.comments %}
+                        {% for comment in notice.comments %}
                             {% if comment.replies == [] %}
                             {% else %} 
                             {% endif %}
@@ -82,14 +82,14 @@
                                     {% if current_user.is_admin %}
                                     <td>
                                         <div class="btn-group">
-                                            <a class="btn btn-sm btn-primary float-right" href="{{ url_for('reply', indexID=discussion.id, postID=post.id, commentID=comment.id) }}">Reply</a>
+                                            <a class="btn btn-sm btn-primary float-right" href="{{ url_for('reply', indexID=noticeBoard.id, noticeID=notice.id, commentID=comment.id) }}">Reply</a>
                                         </div>
                                     </td>
                                     {% endif %}
                             {% if comment.replies != [] and current_user.is_admin == false %}
                                     <td>
                                         <div class="btn-group">
-                                            <a class="btn btn-sm btn-primary float-left" href="{{ url_for('reply', indexID=discussion.id, postID=post.id, commentID=comment.id) }}">View Replies</a>
+                                            <a class="btn btn-sm btn-primary float-left" href="{{ url_for('reply', indexID=noticeBoard.id, noticeID=notice.id, commentID=comment.id) }}">View Replies</a>
                                         </div>
                                     </td>
                                 

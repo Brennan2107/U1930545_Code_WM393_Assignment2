@@ -2,8 +2,8 @@ import re
 from flask import Flask
 from flask import render_template, request, redirect, url_for
 from flask_login import LoginManager, login_required, login_user, logout_user, current_user
-from jsondb import DiscussionManager
-from models import Post, User, Discussion, Comment, Reply
+from jsondb import NoticeManager
+from models import Notice, User, NoticeBoard, Comment, Reply
 
 users = [
     {'tutor@warwick.ac.uk': {'password': '1111', 'is_admin': True }},
@@ -42,7 +42,7 @@ def unauthorized_callback():
 @app.route('/')
 def index():
     if current_user.is_authenticated:
-        return redirect(url_for('discussion'))
+        return redirect(url_for('noticeBoardHomePage'))
     else:
         return redirect(url_for('login'))
 
@@ -50,7 +50,7 @@ def index():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('discussion'))
+        return redirect(url_for('noticeBoardHomePage'))
 
     if request.method == 'GET':
         return render_template('login.html')
@@ -64,7 +64,7 @@ def login():
             user.id = email
             login_user(user)
 
-            return redirect(url_for('discussion'))
+            return redirect(url_for('noticeBoardHomePage'))
         else:
             return redirect(url_for('login'))
     except Exception as e:
@@ -77,84 +77,84 @@ def logout():
     return redirect(url_for('login'))
 
 
-# renders the discussion board main menu
+# renders noticeBoardHomePage
 @app.route('/')
-@app.route('/discussion')
+@app.route('/noticeBoardHomePage')
 @login_required
-def discussion():
-    aDManager = DiscussionManager()
-    discussions = aDManager.getDiscussions()
-    return render_template('discussion.html', discussions=discussions)
+def noticeBoardHomePage():
+    aDManager = NoticeManager()
+    noticeBoards = aDManager.getNoticeBoards()
+    return render_template('noticeBoardHomePage.html', noticeBoards=noticeBoards)
 
-# renders the posts list for a specific discussion board
+# renders the posts list for a specific notice board
 @app.route('/list/<int:indexID>')
 @login_required
 def list(indexID):
-    aDManager = DiscussionManager()
-    discussion = aDManager.getDiscussion(indexID)
-    return render_template('list.html', discussion=discussion)
+    aDManager = NoticeManager()
+    noticeBoard = aDManager.getNoticeBoard(indexID)
+    return render_template('list.html', noticeBoard=noticeBoard)
 
-# renders the detail view for a specific post on a specific discussion board
-@app.route('/detail/<int:indexID>/<int:postID>')
+# renders the detail view for a specific post on a specific notice board
+@app.route('/detail/<int:indexID>/<int:noticeID>')
 @login_required
-def detail(indexID, postID):
-    aDManager = DiscussionManager()
-    aDiscussion = aDManager.getDiscussion(indexID)
-    if aDiscussion is not None:
-        aPost = aDManager.getDiscussionPost(indexID, postID)
-        return render_template('detail.html', discussion=aDiscussion, post=aPost)
+def detail(indexID, noticeID):
+    aDManager = NoticeManager()
+    aNoticeBoard = aDManager.getNoticeBoard(indexID)
+    if aNoticeBoard is not None:
+        aNotice = aDManager.getNotice(indexID, noticeID)
+        return render_template('detail.html', noticeBoard=aNoticeBoard, notice=aNotice)
 
     return redirect(url_for('list'))
 
-# renders the form view to allow tutors to be able to create and modify discussion board
+# renders the form view to allow tutors to be able to create and modify notice board
 @app.route('/form')
 @app.route('/form/<int:indexID>')
 @login_required
 def form(indexID=None):
-    aDiscussion = None
+    aNoticeBoard = None
     if indexID is not None:
-        aDManager = DiscussionManager()
-        aDiscussion = aDManager.getDiscussion(indexID)
+        aDManager = NoticeManager()
+        aNoticeBoard = aDManager.getNoticeBoard(indexID)
 
-    return render_template('form.html', indexid=indexID, discussion=aDiscussion)
+    return render_template('form.html', indexid=indexID, noticeBoard=aNoticeBoard)
 
 # renders the formpost view to be able to create a new post on a specific board
 @app.route('/formpost/<int:indexID>')
-@app.route('/formpost/<int:indexID>/<int:postID>')
+@app.route('/formpost/<int:indexID>/<int:noticeID>')
 @login_required
-def formpost(indexID=None, postID=None):
-    aDiscussion = None
-    aPost = None
+def formpost(indexID=None, noticeID=None):
+    aNoticeBoard = None
+    aNotice = None
     if indexID is not None:
-        aDManager = DiscussionManager()
-        aDiscussion = aDManager.getDiscussion(indexID)
-        for _idx, _post in enumerate(aDiscussion['posts']):
-            if _post['id'] == postID:
-                aPost = _post
+        aDManager = NoticeManager()
+        aNoticeBoard = aDManager.getNoticeBoard(indexID)
+        for _idx, _notice in enumerate(aNoticeBoard['notices']):
+            if _notice['id'] == noticeID:
+                aNotice = _notice
 
-    return render_template('formpost.html', discussion=aDiscussion, post=aPost)
+    return render_template('formpost.html', noticeBoard=aNoticeBoard, notice=aNotice)
 
 
 
 @app.route('/save', methods=['POST'])
 @login_required
 def save():
-    aDiscussion = Discussion.populate(request.form)
-    aDiscussion.name = 'Any Name' # This will be replaced by login name if there is a login function.
-    aDManager = DiscussionManager()
-    aDManager.insertDiscussion(aDiscussion)
+    aNoticeBoard = NoticeBoard.populate(request.form)
+    aNoticeBoard.name = 'Any Name' # This will be replaced by login name if there is a login function.
+    aDManager = NoticeManager()
+    aDManager.insertNoticeBoard(aNoticeBoard)
 
-    return redirect(url_for('discussion'))
+    return redirect(url_for('noticeBoardHomePage'))
 
 
 
-@app.route('/savepost/<int:indexID>', methods=['GET', 'POST'])
+@app.route('/savenotice/<int:indexID>', methods=['GET', 'POST'])
 @login_required
-def savepost(indexID):
-    aPost = Post.populate(request.form)
-    aPost.name = 'Any Name' # This will be replaced by login name if there is a login function.
-    aDManager = DiscussionManager()
-    aDManager.insertPost(indexID, aPost)
+def savenotice(indexID):
+    aNotice = Notice.populate(request.form)
+    aNotice.name = 'Any Name' # This will be replaced by login name if there is a login function.
+    aDManager = NoticeManager()
+    aDManager.insertNotice(indexID, aNotice)
 
     return redirect(url_for('list', indexID=indexID))
 
@@ -162,34 +162,34 @@ def savepost(indexID):
 @app.route('/update/<int:indexID>', methods=['GET', 'POST'])
 @login_required
 def update(indexID):
-    aDiscussion = Discussion.populate(request.form)
-    aDManager = DiscussionManager()
-    aDManager.updateDiscussion(indexID, aDiscussion)
-    return redirect(url_for('discussion'))
+    aNoticeBoard = NoticeBoard.populate(request.form)
+    aDManager = NoticeManager()
+    aDManager.updateNotice(indexID, aNoticeBoard)
+    return redirect(url_for('noticeBoardHomePage'))
 
 
-@app.route('/updatepost/<int:indexID>/<int:postID>', methods=['GET', 'POST'])
+@app.route('/updatenotice/<int:indexID>/<int:noticeID>', methods=['GET', 'POST'])
 @login_required
-def updatepost(indexID, postID):
-    aPost = Post.populate(request.form)
-    aDManager = DiscussionManager()
-    aDManager.updatePost(indexID, postID, aPost)
+def updatenotice(indexID, noticeID):
+    aNotice = Notice.populate(request.form)
+    aDManager = NoticeManager()
+    aDManager.updateNotice(indexID, noticeID, aNotice)
     return redirect(url_for('list', indexID=indexID))
 
 
 @app.route('/delete/<int:indexID>', methods=['GET'])
 @login_required
 def delete(indexID):
-    aDManager = DiscussionManager()
-    aDManager.deleteDiscussion(indexID)
-    return redirect(url_for('discussion'))
+    aDManager = NoticeManager()
+    aDManager.deleteNoticeBoard(indexID)
+    return redirect(url_for('noticeBoardHomePage'))
 
 
-@app.route('/deletepost/<int:indexID>/<int:postID>', methods=['GET'])
+@app.route('/deletenotice/<int:indexID>/<int:noticeID>', methods=['GET'])
 @login_required
-def deletepost(indexID, postID):
-    aDManager = DiscussionManager()
-    aDManager.deletePost(indexID, postID)
+def deletenotice(indexID, noticeID):
+    aDManager = NoticeManager()
+    aDManager.deleteNotice(indexID, noticeID)
     return redirect(url_for('list', indexID=indexID))    
 
 
@@ -197,15 +197,15 @@ def deletepost(indexID, postID):
 
 
 # renders the reply window
-@app.route('/reply/<int:indexID>/<int:postID>/<int:commentID>')
+@app.route('/reply/<int:indexID>/<int:noticeID>/<int:commentID>')
 @login_required
-def reply(indexID, postID, commentID):
-    aDManager = DiscussionManager()
-    aDiscussion = aDManager.getDiscussion(indexID)
-    if aDiscussion is not None:
-        aPost = aDManager.getDiscussionPost(indexID, postID)
-        aComment = aDManager.getNoticeComments(indexID, postID, commentID)
-        return render_template('reply.html', discussion=aDiscussion, post=aPost, comment=aComment)
+def reply(indexID, noticeID, commentID):
+    aDManager = NoticeManager()
+    aNoticeBoard = aDManager.getNoticeBoard(indexID)
+    if aNoticeBoard is not None:
+        aNotice = aDManager.getNoticeNotice(indexID, noticeID)
+        aComment = aDManager.getNoticeComments(indexID, noticeID, commentID)
+        return render_template('reply.html', noticeBoard=aNoticeBoard, notice=aNotice, comment=aComment)
 
     return redirect(url_for('detail'))
 
@@ -215,22 +215,22 @@ def reply(indexID, postID, commentID):
 
 
 # Triggers the savecomment for a new comment to a post
-@app.route('/savecomment/<int:indexID>/<int:postID>', methods=['GET', 'POST'])
+@app.route('/savecomment/<int:indexID>/<int:noticeID>', methods=['GET', 'POST'])
 @login_required
-def savecomment(indexID, postID):
+def savecomment(indexID, noticeID):
     aComment = Comment.populate(request.form)
-    aDManager = DiscussionManager()
-    aDManager.insertComment(indexID, postID, aComment)
+    aDManager = NoticeManager()
+    aDManager.insertComment(indexID, noticeID, aComment)
     # Change this to redirect to detail page
-    return redirect(url_for('detail', indexID=indexID, postID=postID))
+    return redirect(url_for('detail', indexID=indexID, noticeID=noticeID))
 
 
 # Triggers the savereply for a new reply to a comment
-@app.route('/savereply/<int:indexID>/<int:postID>/<int:commentID>', methods=['GET', 'POST'])
+@app.route('/savereply/<int:indexID>/<int:noticeID>/<int:commentID>', methods=['GET', 'POST'])
 @login_required
-def savereply(indexID, postID, commentID):
+def savereply(indexID, noticeID, commentID):
     aReply = Reply.populate(request.form)
-    aDManager = DiscussionManager()
-    aDManager.insertReply(indexID, postID, commentID, aReply)
+    aDManager = NoticeManager()
+    aDManager.insertReply(indexID, noticeID, commentID, aReply)
     # Change this to redirect to detail page
-    return redirect(url_for('reply', indexID=indexID, postID=postID, commentID=commentID))    
+    return redirect(url_for('reply', indexID=indexID, noticeID=noticeID, commentID=commentID))    
