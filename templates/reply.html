@@ -1,23 +1,34 @@
 {% extends "layout.html" %} {% block content %}
+<!-- Links page to noticeCommentRepliesPage css -->
 <link href="{{ url_for('static', filename='sweetalert2/noticeCommentRepliesPage.css') }}" rel="stylesheet" >
+
+<!-- Container for the Notice Comment Replies apge overall tile-->
 <section class="container">
     <div class="card">
+
+        <!-- Header containing Comment Summary title and Go back to comment page button -->
         <div class="card-header">
-            Replies
+            Comment Summary
             <a class="btn btn-sm btn-primary float-right" href="{{ url_for('noticeCommentPage', indexID=noticeBoard.id, noticeID=notice.id) }}">Go Back to Comments</a>
         </div>
-            <div class="card-body">
 
+            <!-- Comment that the replies are linked to is displayed below the Replies title -->
+            <div class="card-body">
                 <p style= "color: white; font-weight: 300; font-size: 21px;" class="card-text">{{ comment.comment }}</p>
- 
             </div>
+
+            <!-- Replies section of the code -->
             <form method="POST" action="{{url_for('savereply', indexID=noticeBoard.id, noticeID=notice.id, commentID=comment.id)}}">
                 <div class="card-header">
-                    Notice Comments
+                    Replies Section
+
+                    <!-- Only show Submit New Reply button to tutors as they are the only type of users that can reply to comments -->
                     {% if current_user.is_admin %}
                     <input class="btn btn-sm btn-primary float-right" type="submit" id="submit" value="Submit New Reply"> &nbsp;
                     {% endif %}
                 </div>
+
+                <!-- Only show Enter New comment title and input to tutors as they are the only type of users that can reply to comments -->
                 {% if current_user.is_admin %}
                 <div class="card-body">
                     <!--If user is a student they shouldn't see the add new comment bit they should only be able to see the Reply buttons-->
@@ -26,6 +37,8 @@
                 </div>
                 {% endif %}
             </form>
+
+            <!-- Submitted comments box -->
             <div class="card-body">
                 <table class="table table-striped">
                     <col style="width:88%">
@@ -33,6 +46,7 @@
                     <tr>
                         <td colspan="2">Submitted Replies</td>
                     </tr>
+                    <!-- Loop through all replies to the comment and add the reply and date to the submitted replies table -->
                     {% for reply in comment.replies %}
                     <tr>
                         <td>{{ reply.reply }}</td>

@@ -1,19 +1,25 @@
 {% extends "layout.html" %} {% block content %}
+<!-- Links page to noticeListPageDesign css -->
 <link href="{{ url_for('static', filename='sweetalert2/noticeListPageDesign.css') }}" rel="stylesheet" >
+
+<!-- Container for the Notice List Page overall tile-->
 <section class="container">
     <div class="card">
         <div class="card-header">
+            <!-- Title displaying Notice List along with the name of the notice board open -->
             Notices List | {{ noticeBoard.title }}
             <div class="btn-group float-right">
+                <!-- Only displays new notice button if the user is an admin -->
                 {% if current_user.is_admin %}
                 <a class="btn btn-sm btn-primary float-right" href="{{ url_for('noticeEditor', indexID=noticeBoard.id) }}">New Notice</a>
                 {% endif %}
             </div>
             <a  class="btn btn-sm btn-primary float-right" href="{{ url_for('noticeBoardHomePage') }}">Go Back to Notice Home Page</a>
         </div>
+
+
         <div class="card-body">
 
-            
             <!-- High Priority Table -->
             <table class="highPriorityTable" width="100%">
                 <col style="width:88%">
@@ -21,12 +27,14 @@
                 <tr>
                     <td colspan="5">High Priority Notices</td>
                     {% for notice in noticeBoard.notices %}
+                        <!-- For all notices, if the notice has a high priority add it to the high priority notice list -->
                         {% if notice.noticePriority == "High" %}
                             <tr>
                                 <td>
                                     <a style = "color:white" href="{{ url_for('noticeCommentPage', indexID=noticeBoard.id, noticeID=notice.id) }}">{{ notice.title }}</a>
                                 </td>
                                 <td>{{ notice.date }}</td>
+                                <!-- If the user is an admin, show the Update and Delete buttons -->
                                 {% if current_user.is_admin %}
                                 <td>
                                     <div class="btn-group">
@@ -52,12 +60,14 @@
 	            <col style="width:12%">
                     <td colspan="5">Medium Priority Notices</td>
                     {% for notice in noticeBoard.notices %}
-                        {% if notice.noticePriority == "Medium" %}
+                    <!-- For all notices, if the notice has a medium priority add it to the medium priority notice list -->
+                    {% if notice.noticePriority == "Medium" %}
                             <tr>
                                 <td>
                                     <a style = "color:white" href="{{ url_for('noticeCommentPage', indexID=noticeBoard.id, noticeID=notice.id) }}">{{ notice.title }}</a>
                                 </td>
                                 <td>{{ notice.date }}</td>
+                                <!-- If the user is an admin, show the Update and Delete buttons -->
                                 {% if current_user.is_admin %}
                                 <td>
                                     <div class="btn-group">
@@ -85,12 +95,14 @@
 	            <col style="width:12%">
                     <td colspan="5">Low Priority Notices</td>
                     {% for notice in noticeBoard.notices %}
+                        <!-- For all notices, if the notice has a low priority add it to the low priority notice list -->
                         {% if notice.noticePriority == "Low" %}
                             <tr>
                                 <td>
                                     <a style = "color:white" href="{{ url_for('noticeCommentPage', indexID=noticeBoard.id, noticeID=notice.id) }}">{{ notice.title }}</a>
                                 </td>
                                 <td>{{ notice.date }}</td>
+                                <!-- If the user is an admin, show the Update and Delete buttons -->
                                 {% if current_user.is_admin %}
                                 <td>
                                     <div class="btn-group">
@@ -113,18 +125,21 @@
 
 
             <!-- N/A Priority Priority Table -->
-
             <table class="naPriorityTable" width="100%">
                 <col style="width:88%">
 	            <col style="width:12%">
                     <td colspan="5">N/A Priority Notices</td>
+
                     {% for notice in noticeBoard.notices %}
+                        <!-- For all notices, if the notice has a n/a priority add it to the n/a priority notice list -->
                         {% if notice.noticePriority == "N/A" %}
                             <tr>
                                 <td>
                                     <a style = "color:white" href="{{ url_for('noticeCommentPage', indexID=noticeBoard.id, noticeID=notice.id) }}">{{ notice.title }}</a>
                                 </td>
                                 <td>{{ notice.date }}</td>
+
+                                <!-- If the user is an admin, show the Update and Delete buttons -->
                                 {% if current_user.is_admin %}
                                 <td>
                                     <div class="btn-group">
@@ -132,8 +147,8 @@
                                             <i class="fas fa-bars"></i>
                                         </button>
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="{{ url_for('noticeEditor', indexID=noticeBoard.id, noticeID=notice.id) }}">Update</a>
-                                            <a class="dropdown-item alertnotice" index_id="{{ noticeBoard.id }}" notice_id="{{ notice.id }}" href="#">Delete</a>
+                                            <a class="dropdown-item" href="{{ url_for('noticeEditor', indexID=noticeBoard.id, noticeID=notice.id) }}">Update Notice</a>
+                                            <a class="dropdown-item alertnotice" index_id="{{ noticeBoard.id }}" notice_id="{{ notice.id }}" href="#">Delete Notice</a>
                                         </div>
                                     </div>
                                 </td>
@@ -148,8 +163,7 @@
     </div>
 </section>
 
-<!-- Sweet Alert -->
-
+<!-- Delete Notice Board interface -->
 <link href="{{ url_for('static', filename='sweetalert2/sweetalert2.css') }}" rel="stylesheet">
 <script src="{{ url_for('static', filename='sweetalert2/sweetalert2.min.js') }}"></script>
 

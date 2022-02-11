@@ -1,23 +1,33 @@
 {% extends "layout.html" %} {% block content %}
+<!-- Links page to createNoticeBoard css -->
 <link href="{{ url_for('static', filename='sweetalert2/createNoticeBoard.css') }}" rel="stylesheet" >
+
+<!-- Container for the Notice Board Editor Page overall tile-->
 <section class="container">
     <div class="card">
-        <form method="POST" action="{{ url_for('save') if noticeBoard is none else  url_for('update', indexID=indexid) }}">
+        <form method="POST" action="{{ url_for('save') if noticeBoard is none else url_for('update', indexID=indexid) }}">
+
+            <!-- Defines Notice Board Editor title -->
             <div class="card-header">
                 NOTICE BOARD EDITOR
             </div>
-            <div class="card-body">
 
+
+            <div class="card-body">
+                <!-- Notice Board Title entry functionality -->
                 <div class="form-group">
                     <label style= "color: white; font-weight: 500; font-size: 23px;" for="title" for="topic">Notice Board Title</label>
                     <input type="text" class="form-control" id="title" name="title" value="{{ noticeBoard.title }}">
                 </div>
+
+                <!-- Notice Board module link entry functionality -->
                 <div class="form-group">
                     <label style= "color: white; font-weight: 500; font-size: 23px;" for="title" for="description">Module Link</label>
                     <textarea class="form-control" id="moduleLink" name="moduleLink" rows="1">{{ noticeBoard.moduleLink }}</textarea>
                 </div>
 
             </div>
+            <!-- Footer buttons for cancelling and Confirming Notice Board creation/updates -->
             <div class="card-footer">
                 <a class="btn btn-sm btn-secondary float-left" href="{{ url_for('noticeBoardHomePage') }}">Cancel</a>
                 <input class="btn btn-sm btn-primary float-right" type="submit" id="submit" value="Confirm Notice Board"> &nbsp;

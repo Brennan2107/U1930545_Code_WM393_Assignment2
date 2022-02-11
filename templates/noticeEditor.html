@@ -1,21 +1,31 @@
 {% extends "layout.html" %} {% block content %}
+<!-- Links page to createUpdateNotice css -->
 <link href="{{ url_for('static', filename='sweetalert2/createupdateNotice.css') }}" rel="stylesheet" >
+
+<!-- container for overall Notice Editor tile -->
 <section class="container">
     <div class="card">
+
+        <!-- Calls savenotice function if the notice id does not already exist otherwise update the notice for the notice id passed in -->
         <form method="POST" action="{{ url_for('savenotice', indexID=noticeBoard.id) if notice is none else url_for('updatenotice', indexID=noticeBoard.id, noticeID=notice.id) }}">
             <div class="card-header">
-                NOTICE CREATION WINDOW
+                NOTICE EDITOR
             </div>
             <div class="card-body">
-
+                
+                <!-- Notice title entry -->
                 <div class="form-group">
                     <label style= "color: white; font-weight: 500; font-size: 23px;" for="title" for="title">Notice Title</label>
                     <input type="text" class="form-control" id="title" name="title" value="{{ notice.title }}">
                 </div>
+
+                <!-- Module link entry -->
                 <div class="form-group">
                     <label style= "color: white; font-weight: 500; font-size: 23px;" for="title" for="description">Notice Description</label>
                     <textarea class="form-control" id="description" name="description" rows="10">{{ notice.description }}</textarea>
                 </div>
+
+                <!-- Notice Priority level entry -->
                 <label style= "color: white; font-weight: 500; font-size: 23px;" for="title" for="noticePriority">Notice Priority Level</label>
                 <select name="noticePriority" id="noticePriority">
                     <option value="N/A">N/A</option>
@@ -24,9 +34,11 @@
                     <option value="Low">Low</option>
                 </select>
             </div>
+
+            <!-- Cancel or Confirm Notice buttons -->
             <div class="card-footer">
                 <a class="btn btn-sm btn-secondary float-left" href="{{ url_for('noticeList', indexID=noticeBoard.id) }}">Cancel</a>
-                <input class="btn btn-sm btn-primary float-right" type="submit" id="submit" value="Create New Notice"> &nbsp;
+                <input class="btn btn-sm btn-primary float-right" type="submit" id="submit" value="Confirm Notice"> &nbsp;
             </div>
         </form>
     </div>

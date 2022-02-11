@@ -1,21 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+/* Import fonts from googleapis online */
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3&display=swap');
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    /*Whole system will use the same font 'Poppins'*/
-    font-family: 'Poppins', sans-serif;
+    font-family: "Source Sans 3";
 }
 
-
+/* Background colour for oveall card*/
 .container .card{
     background: linear-gradient(180deg, #a1a1a1a2, #3131319d 100%) no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
+
 }
 
+/* Font size and colour for notice name and priority level title within header */
 .container .card .card-header{
     font-weight: 900;
     font-size: 30px;
@@ -30,9 +28,9 @@
     border-color: #04366b4f;
 }
 
+/* Submitted comment overall table configuration */
 .container .card .card-body .table{
     width: cover;
-    font-family: Ubuntu;
     border-radius: 10px;
     background: linear-gradient(180deg, #747474c7, #35353596 100%);
     line-height: 50px;
@@ -41,6 +39,7 @@
     margin-bottom: 30px;
   }  
 
+/* Submitted comment table header configuration */  
 .container .card .card-body .table tr:first-child td{
     border-radius: 10px;
     background: linear-gradient(320deg, #a7a9ac, #707070 100%);

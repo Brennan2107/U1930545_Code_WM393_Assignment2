@@ -22,7 +22,7 @@
 <style>
 
 body{
-    background: linear-gradient(360deg, #07789b, #1af1e7 50%) no-repeat center center fixed;
+    background: linear-gradient(180deg, #ffffff, #5cced6 100%) no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -31,7 +31,7 @@ body{
 
 .switch {
   position: relative;
-  display: inline-block;
+  display: inline-block
   width: 60px;
   height: 34px;
 }
@@ -84,10 +84,18 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
+
+
+
 </style>
+
+
 
 <body style="min-height: 75rem; padding-top: 4.5rem;">
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-primary">
+        <div id="logo">
+          <img src="/static/logo.png">
+        </div>
         <a class="navbar-brand" href="#">Sample Discusion Board</a> {% if current_user.is_authenticated %}
         <a class="navbar-brand float-right" href="{{ url_for('logout') }}">Logout</a> {% endif %}
         <!-- Day/Night Mode slider -->
@@ -102,5 +110,19 @@ input:checked + .slider:before {
     {% block content %}{% endblock content %}
 
 </body>
+
+<style>
+
+img {
+    display: inline-block;
+    vertical-align: top;
+    width: 30px;
+    height: 30px;
+    margin-right: 5px;
+    margin-top: 1px;
+    margin-bottom: 1px;   /* if you want it vertically middle of the navbar. */
+}
+</style>
+
 
 </html>

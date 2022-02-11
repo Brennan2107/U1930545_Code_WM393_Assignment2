@@ -1,21 +1,18 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+/* Import fonts from googleapis online */
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3&display=swap');
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    /*Whole system will use the same font 'Poppins'*/
-    font-family: 'Poppins', sans-serif;
+    font-family: "Source Sans 3";
 }
 
-
+/* Main Notice Editor tile configuration */
 .container .card{
     background: linear-gradient(180deg, #a1a1a1a2, #3131319d 100%) no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
 }
 
+/* Notice editor card header configuration */
 .container .card .card-header{
     font-weight: 900;
     font-size: 30px;
@@ -31,22 +28,3 @@
     border-color: #04366b4f;
     margin-bottom: 10px;
 }
-
-.container .card .card-body .table{
-    width: cover;
-    font-family: Ubuntu;
-    border-radius: 10px;
-    background: linear-gradient(180deg, #9e9e9ec7, #5f5f5f96 100%);
-    line-height: 50px;
-    color: white;
-    box-shadow: 5px 5px 10px rgba(255, 255, 255, 0.342);
-    margin-bottom: 30px;
-  }  
-
-.container .card .card-body .table tr:first-child td{
-    border-radius: 10px;
-    background: linear-gradient(320deg, #a7a9ac, #707070 100%);
-    font-weight: 500;
-    font-size: 23px;
-}
-

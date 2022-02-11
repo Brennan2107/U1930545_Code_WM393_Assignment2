@@ -1,9 +1,10 @@
 {% extends "layout.html" %} {% block content %}
+<!-- Links page to noticeCommentPage css -->
 <link href="{{ url_for('static', filename='sweetalert2/noticeCommentPage.css') }}" rel="stylesheet" >
 <section class="container">
     <div class="card">
 
-    <!-- Header colour for High priority notice-->
+    <!-- Header colour for High priority notice -->
     {% if notice.noticePriority == "High" %}
         <div class="card-header" style="background: #ff0000;">
     {% endif %}
@@ -23,13 +24,14 @@
         <div class="card-header" style="background: #c2c2c2;">
     {% endif %}
 
+            <!-- Header title for comments page containing the notice title and the level of priority -->
             {{ notice.title }} | {{ notice.noticePriority }} Priority
             <a class="btn btn-sm btn-primary float-right" href="{{ url_for('noticeList', indexID=noticeBoard.id) }}">Go Back to Notice List</a>
         </div>
-        <div class="card-body">
+        <div style="color: white" class="card-body">
             {{ notice.description }}
         </div>
-                <!--Notice Comments heading including Submit New Comment button !!!Need to update href for the button!!! -->
+            <!--Notice Comments heading including Submit New Comment button -->
             <form method="POST" action="{{url_for('savecomment', indexID=noticeBoard.id, noticeID=notice.id)}}">
             <!-- Header colour for High priority notice-->
             {% if notice.noticePriority == "High" %}
@@ -51,34 +53,44 @@
                 <div class="card-header" style="background: linear-gradient(180deg, #c2c2c2, #c2c2c2a2 100%);">
             {% endif %}
                     Comments
+                    <!-- Only allow students to view and click the submit new comment button -->
                     {% if current_user.is_admin == false %}
                     <input class="btn btn-sm btn-primary float-right" type="submit" id="submit" value="Submit New Comment"> &nbsp;
                     {% endif %}
                 </div>
+                <!-- Only students can see the enter new comment section -->
                 {% if current_user.is_admin == false %}
                 <div class="card-body">
-                    <!--If user is a student they shouldn't see the add new comment bit they should only be able to see the Reply buttons-->
                     <label style= "color: white; font-weight: 500; font-size: 23px;" for="title">Enter New Comment</label>
                     <input type="text" class="form-control" id="comment" name="comment">
                 </div>
                 {% endif %}
             </form>
        
-
+            <!-- Submitted comments table -->
             <div class="card-body">
                 <table class="table">
-                    <col style="width:82%">
-                    <col style="width:12%">
-                    <col style="width:6%">
+                    <col style="width:79%">
+                    <col style="width:10%">
+                    <col style="width:11%">
                     <tr>
+                        <!-- Span heading across 3 columns -->
                         <td colspan="3">Submitted Comments</td>
-                        {% for comment in notice.comments %}
-                            {% if comment.replies == [] %}
-                            {% else %} 
-                            {% endif %}
+                        <!-- Loop through all comments on the notice -->
                                 <tr>
-                                    <td>{{ comment.comment }}</td>
-                                    <td>{{ comment.date }}</td>
+     
+                            {% for comment in notice.comments %}
+                                <!-- If the comment has no replies set font glow to red -->
+                                {% if comment.replies == [] %}
+                                    <td style="text-shadow:1px 1px 10px rgba(255, 0, 0, 0.668), 1px 1px 10px rgba(170, 10, 10, 0.429);">{{ comment.comment }}</td>
+                                    <td style="text-shadow:1px 1px 10px rgba(255, 0, 0, 0.668), 1px 1px 10px rgba(170, 10, 10, 0.429);">{{ comment.date }}</td>
+                                <!-- If the comment has a reply set font glow of comment to green -->
+                                {% else %}
+                                    <td style="text-shadow:1px 1px 10px rgba(0, 255, 34, 0.568), 1px 1px 10px rgba(11, 216, 90, 0.329);">{{ comment.comment }}</td>
+                                    <td style="text-shadow:1px 1px 10px rgba(0, 255, 34, 0.568), 1px 1px 10px rgba(11, 216, 90, 0.329);">{{ comment.date }}</td>
+                                    {% endif %}
+
+                                    <!-- Only show the Reply button if the user is an admin and regardless of whether or not the comment is replied to -->
                                     {% if current_user.is_admin %}
                                     <td>
                                         <div class="btn-group">
@@ -86,13 +98,13 @@
                                         </div>
                                     </td>
                                     {% endif %}
+                            <!-- Only display View Replies if the comment is replied to and the user is not a tutor -->
                             {% if comment.replies != [] and current_user.is_admin == false %}
                                     <td>
                                         <div class="btn-group">
                                             <a class="btn btn-sm btn-primary float-left" href="{{ url_for('reply', indexID=noticeBoard.id, noticeID=notice.id, commentID=comment.id) }}">View Replies</a>
                                         </div>
                                     </td>
-                                
                             {% endif %}
                             {% if comment.replies == [] and current_user.is_admin == false %}
                                     <td>

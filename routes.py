@@ -164,7 +164,7 @@ def savenotice(indexID):
 def update(indexID):
     aNoticeBoard = NoticeBoard.populate(request.form)
     aDManager = NoticeManager()
-    aDManager.updateNotice(indexID, aNoticeBoard)
+    aDManager.updateNoticeBoard(indexID, aNoticeBoard)
     return redirect(url_for('noticeBoardHomePage'))
 
 

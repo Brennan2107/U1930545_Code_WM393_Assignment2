@@ -1,7 +1,12 @@
 {% extends "layout.html" %} {% block content %}
+<!-- Links page to noticeBoardHomePageDesign css -->
 <link href="{{ url_for('static', filename='sweetalert2/noticeBoardHomePageDesign.css') }}" rel="stylesheet" >
+
+<!-- Container for the Notice Board Home Page overall tile-->
 <section class="container">
     <div class="card">
+
+        <!-- Header setup with title and Create New Notice Board button -->
         <div class="card-header bg-primary text-white">
             NOTICE BOARD HOME PAGE
             <div class="btn-group float-right">
@@ -10,20 +15,27 @@
                 {% endif %}
             </div>
         </div>
+
+        <!-- Body containing the Notice Board titles within the container -->
         <div class="card-body">
             <div class="row">
+
+                <!-- Display each notice board in noticeBoards in it's own tile -->
                 {% for noticeBoard in noticeBoards %}
                 <div class="card" style="margin:10px; width: 21rem; height:15rem;">
                     <div class="card-body">
                         <a style="color:white" href="{{ url_for('noticeList', indexID=noticeBoard.id) }}" class="card-title">{{ noticeBoard.title }}</a>
                         <p style="color:white" class="card-text">{{ noticeBoard.moduleLink }}</p>
                     </div>
+
+                    <!-- Only display admin footer to admins, allowing link to delete and modify a board-->
                     {% if current_user.is_admin %}
                     <div class="card-footer">
                         <a class="btn btn-sm btn-primary" href="{{ url_for('noticeBoardEditor', indexID=noticeBoard.id) }}">Modify Board</a>
                         <a class="btn btn-sm btn-primary alertnoticeBoard" index_id="{{ noticeBoard.id }}" href="#">Delete Board</a>
                     </div>
                     {% endif %}
+                    
                 </div>
                 {% endfor %}
             </div>
@@ -31,8 +43,8 @@
     </div>
 </section>
 
-<!-- Sweet Alert -->
 
+<!-- Delete Notice Board interface -->
 <link href="{{ url_for('static', filename='sweetalert2/sweetalert2.css') }}" rel="stylesheet">
 <script src="{{ url_for('static', filename='sweetalert2/sweetalert2.min.js') }}"></script>
 

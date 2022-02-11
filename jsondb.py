@@ -112,8 +112,8 @@ class NoticeManager:
     def updateNoticeBoard(self, indexID, aNoticeBoard):
         for _idx, _NoticeBoard in enumerate(self.__noticeBoards):
             if indexID == _NoticeBoard['id']: 
-                self.__noticeBoards[_idx]['topic'] = aNoticeBoard.topic
-                self.__noticeBoards[_idx]['description'] = aNoticeBoard.description
+                self.__noticeBoards[_idx]['title'] = aNoticeBoard.title
+                self.__noticeBoards[_idx]['moduleLink'] = aNoticeBoard.moduleLink
         self.saveNoticeBoards(self.__noticeBoards)                
 
     # Updating both title and description fields for the corresponding postId when a post is modified
