@@ -58,6 +58,7 @@ class TestNoticeBoard:
 
 
     # Ensure that title and moduleLink are as updated to the correct board as required
+    @pytest.mark.skip
     def test_UpdateBoard(self):
 
         aDManager = NoticeManager()
@@ -88,7 +89,7 @@ class TestNoticeBoard:
         assert updatednoticeboard['moduleLink'] == updatedNoticeModuleLink
 
 
-
+    @pytest.mark.skip
     def test_deleteNewBoard(self):
 
         aDManager = NoticeManager()
@@ -112,6 +113,7 @@ class TestNoticeComment:
 
     # Create new Comment test 
     # Ensure that new comment has the correct text saved against it
+    
     def test_CreateNewComment(self):
         aDManager = NoticeManager()
         
@@ -149,6 +151,7 @@ class TestCommentReply:
 
     # Create new Reply test 
     # Ensure that new reply has the correct text saved against it
+    @pytest.mark.skip
     def test_CreateNewReply(self):
         aDManager = NoticeManager()
         
