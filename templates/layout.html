@@ -13,7 +13,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 </head>
 
 
@@ -85,7 +84,18 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
+.navbar .btn{
+    height: 40px;
+    align-items: center;
+    display: inline-flex;
+    box-shadow: 1px 1px 10px rgb(0, 0, 0), 1px 1px 10px rgb(0, 204, 255);
+    margin-right: 10px;
 
+}
+
+.navbar {
+    background: linear-gradient(180deg, #055596, #477d9c 10%) no-repeat center center fixed;
+}
 
 </style>
 
@@ -96,33 +106,45 @@ input:checked + .slider:before {
         <div id="logo">
           <img src="/static/logo.png">
         </div>
-        <a class="navbar-brand" href="#">Sample Discusion Board</a> {% if current_user.is_authenticated %}
-        <a class="navbar-brand float-right" href="{{ url_for('logout') }}">Logout</a> {% endif %}
-        <!-- Day/Night Mode slider -->
-        <a class="navbar-brand" href="#">Day | Night Mode</a>
-        <label class="switch">
-            <input type="checkbox" unchecked>
-            <span class="slider round"></span>
-        </label>
+
+        
+    
+        {% if current_user.is_authenticated %}
+          {% if current_user.is_admin %}
+            <a style="color: rgb(255, 217, 0)" class="navbar-brand" href="#">tutor</a> 
+          {% else %}
+            <a style="color: rgb(255, 217, 0)" class="navbar-brand" href="#">student</a> 
+          {% endif %}
+          <a style="margin-right: 50px;color: #1f74b9; background-color: rgb(243, 243, 243); float: right" class="btn btn-sm btn-primary" href="{{ url_for('logout') }}">Log-out</a>
+          <a class="btn btn-sm btn-primary" >Lecture Board</a> 
+          <a class="btn btn-sm btn-primary" >Calendar Board</a> 
+          <a class="btn btn-sm btn-primary" >Quiz Board</a> 
+          <a class="btn btn-sm btn-primary" >Q&A Board</a> 
+          <a class="btn btn-sm btn-primary" >Resource Board</a> 
+        {% endif %}
+
+
     </nav>
 
 
+
+  </body>
+
+  <style>
+  
+  img {
+      display: inline-block;
+      vertical-align: top;
+      width: 30px;
+      height: 30px;
+      margin-right: 5px;
+      margin-top: 1px;
+      margin-bottom: 1px;
+  }
+  </style>
+  
+  
+  </html>
+
     {% block content %}{% endblock content %}
 
-</body>
-
-<style>
-
-img {
-    display: inline-block;
-    vertical-align: top;
-    width: 30px;
-    height: 30px;
-    margin-right: 5px;
-    margin-top: 1px;
-    margin-bottom: 1px;   /* if you want it vertically middle of the navbar. */
-}
-</style>
-
-
-</html>

@@ -2,6 +2,7 @@
 <!-- Links page to noticeBoardHomePageDesign css -->
 <link href="{{ url_for('static', filename='sweetalert2/noticeBoardHomePageDesign.css') }}" rel="stylesheet" >
 
+
 <!-- Container for the Notice Board Home Page overall tile-->
 <section class="container">
     <div class="card">
@@ -31,7 +32,7 @@
                     <!-- Only display admin footer to admins, allowing link to delete and modify a board-->
                     {% if current_user.is_admin %}
                     <div class="card-footer">
-                        <a class="btn btn-sm btn-primary" href="{{ url_for('noticeBoardEditor', indexID=noticeBoard.id) }}">Modify Board</a>
+                        <a style="text-align: center" class="btn btn-sm btn-primary" href="{{ url_for('noticeBoardEditor', indexID=noticeBoard.id) }}">Modify Board</a>
                         <a class="btn btn-sm btn-primary alertnoticeBoard" index_id="{{ noticeBoard.id }}" href="#">Delete Board</a>
                     </div>
                     {% endif %}
@@ -42,6 +43,7 @@
         </div>
     </div>
 </section>
+
 
 
 <!-- Delete Notice Board interface -->

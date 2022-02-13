@@ -36,7 +36,8 @@
 
 /* Width of buttons in admin only notice board tile footer */
 .container .card .card-body .row .card .card-footer .btn{
-    width: 145px;
+    width: 143px;
+    text-align: center;
 }
 
 /* Notice Board Home Page text definition */
