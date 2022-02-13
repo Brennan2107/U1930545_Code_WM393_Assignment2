@@ -25,7 +25,7 @@ class Notice:
         return {'id': self.id, 'title': self.title, 'name': self.name, 
                 'date': self.date, 'count': self.count, 'description': self.description, 'noticePriority': self.noticePriority, 'comments': self.comments }
 
-    # Define post metadata structure for storage
+    # Define notice metadata structure for storage
     @staticmethod
     def populate(row):
         aNotice = Notice()

@@ -6,8 +6,8 @@ from jsondb import NoticeManager
 from models import Notice, User, NoticeBoard, Comment, Reply
 
 users = [
-    {'tutor@warwick.ac.uk': {'password': '1111', 'is_admin': True }},
-    {'student@warwick.ac.uk': {'password': '2222', 'is_admin': False }},
+    {'U1010101': {'password': 'tutor', 'is_admin': True }},
+    {'U1930545': {'password': 'student', 'is_admin': False }},
 ]
 
 def checkUser(email):
@@ -140,7 +140,7 @@ def noticeEditor(indexID=None, noticeID=None):
 @login_required
 def save():
     aNoticeBoard = NoticeBoard.populate(request.form)
-    aNoticeBoard.name = 'Any Name' # This will be replaced by login name if there is a login function.
+    aNoticeBoard.name = 'Any Name' 
     aDManager = NoticeManager()
     aDManager.insertNoticeBoard(aNoticeBoard)
 
@@ -152,7 +152,7 @@ def save():
 @login_required
 def savenotice(indexID):
     aNotice = Notice.populate(request.form)
-    aNotice.name = 'Any Name' # This will be replaced by login name if there is a login function.
+    aNotice.name = 'Any Name' 
     aDManager = NoticeManager()
     aDManager.insertNotice(indexID, aNotice)
 

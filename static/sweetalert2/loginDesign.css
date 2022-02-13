@@ -1,0 +1,33 @@
+/* Import fonts from googleapis online */
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Source Sans 3";
+}
+
+/* Card background and width definition */
+.container .card{
+    background: linear-gradient(180deg, #a1a1a1a2, #3131319d 100%) no-repeat center center fixed;
+    margin-left: 10px;
+    margin-right: 13px;
+    font-size: 22px;
+    color: white;
+}
+
+/* Create New Notice Board button definition */
+.container .card .btn{
+    height: 50px;
+    align-items: center;
+    display: inline-flex;
+    box-shadow: 1px 1px 10px rgb(0, 0, 0), 1px 1px 10px rgb(0, 204, 255);
+}
+
+/* Notice Board Home Page text definition */
+.container .card .card-header{
+    font-weight: 900;
+    font-size: 34px;
+    text-align: left;
+}
+
