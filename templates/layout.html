@@ -15,11 +15,10 @@
 
 </head>
 
-
-
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 
+/* Main background */
 body{
     background: linear-gradient(180deg, #ffffff, #5cced6 100%) no-repeat center center fixed;
     -webkit-background-size: cover;
@@ -28,71 +27,16 @@ body{
     background-size: cover;
 }
 
-.switch {
-  position: relative;
-  display: inline-block
-  width: 60px;
-  height: 34px;
-}
-
-.switch input { 
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgb(140, 255, 249);
-  -webkit-transition: 0.5s;
-  transition: 0.5s;
-}
-
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: rgb(255, 230, 118);
-  -webkit-transition: 0.5s;
-  transition: 0.5s;
-}
-
-input:checked + .slider {
-  background-color: #0b0033;
-}
-
-input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
-}
-
-/* Rounded sliders */
-.slider.round {
-  border-radius: 34px;
-}
-
-.slider.round:before {
-  border-radius: 50%;
-}
-
+/* Header buttons */
 .navbar .btn{
     height: 40px;
     align-items: center;
     display: inline-flex;
     box-shadow: 1px 1px 10px rgb(0, 0, 0), 1px 1px 10px rgb(0, 204, 255);
     margin-right: 10px;
-
 }
 
+/* Header background */
 .navbar {
     background: linear-gradient(180deg, #055596, #477d9c 10%) no-repeat center center fixed;
 }
@@ -100,21 +44,22 @@ input:checked + .slider:before {
 </style>
 
 
-
 <body style="min-height: 75rem; padding-top: 4.5rem;">
+  <!-- Logo positioning in top bar-->
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-primary">
         <div id="logo">
           <img src="/static/logo.png">
         </div>
 
         
-    
+        <!-- Display tutor or student text depending on who is logged in -->
         {% if current_user.is_authenticated %}
           {% if current_user.is_admin %}
             <a style="color: rgb(255, 217, 0)" class="navbar-brand" href="#">tutor</a> 
           {% else %}
             <a style="color: rgb(255, 217, 0)" class="navbar-brand" href="#">student</a> 
           {% endif %}
+          <!-- Buttons to other boards within WMGTSS -->
           <a style="margin-right: 50px;color: #1f74b9; background-color: rgb(243, 243, 243); float: right" class="btn btn-sm btn-primary" href="{{ url_for('logout') }}">Log-out</a>
           <a class="btn btn-sm btn-primary" >Lecture Board</a> 
           <a class="btn btn-sm btn-primary" >Calendar Board</a> 
@@ -125,7 +70,6 @@ input:checked + .slider:before {
 
 
     </nav>
-
 
 
   </body>
