@@ -16,21 +16,18 @@ class NoticeManager:
         with open(NoticeManager.JSON_FILE, 'w') as f:
             json.dump(noticeBoards, f)
 
-    # Retrieves all Notice data 
+    # Retrieves all Notice Board data 
     def getNoticeBoards(self):
         return self.__noticeBoards
 
-
-
-
-    # Retrieves individual noticeBoard data and assigns each NoticeBoard to indexID
+    # Retrieves individual noticeBoard data for indexID fed in
     def getNoticeBoard(self, indexID):
         for _idx, _NoticeBoard in enumerate(self.__noticeBoards):
             if indexID == _NoticeBoard['id']:
                 return _NoticeBoard
         return None
 
-    # Retrieves all posts within a NoticeBoard board and if a post is opened the number of times the post has been viewed is incremented by 1
+    # Retrieves all posts within a NoticeBoard board and if a notice is opened the number of times the notice has been viewed is incremented by 1
     def getNotice(self, indexID, noticeID):
         for _idx1, _NoticeBoard in enumerate(self.__noticeBoards):
             if indexID == _NoticeBoard['id']:
@@ -52,7 +49,6 @@ class NoticeManager:
                                 return _comment
         return None
 
-
      # Retrieves all replies to a particular comment on a particular NoticeBoard on a particular board
     def getCommentReplies(self, indexID, noticeID, commentID, replyID):
         for _idx1, _NoticeBoard in enumerate(self.__noticeBoards):
@@ -66,16 +62,11 @@ class NoticeManager:
                                         return _reply
         return None       
 
-
-
-
-
     # Creating a new NoticeBoard board
     def insertNoticeBoard(self, aNoticeBoard):
         aNoticeBoard.id = self.__noticeBoards[0]['id'] + 1
         self.__noticeBoards.insert(0, aNoticeBoard.toDic())
         self.saveNoticeBoards(self.__noticeBoards)
-
 
     # Creating a new post on a notice board
     # If the post id is not 0, takes the next available post id
@@ -84,7 +75,6 @@ class NoticeManager:
         aNotice.id = aNoticeBoard['notices'][0]['id'] + 1 if len(aNoticeBoard['notices']) != 0 else 1
         aNoticeBoard['notices'].insert(0, aNotice.toDic())
         self.saveNoticeBoards(self.__noticeBoards)
-
 
     # Creating a new comment on a post
     # If the post id is not 0, takes the next available post id
@@ -101,11 +91,6 @@ class NoticeManager:
         aReply.id = aComment['replies'][0]['id'] + 1 if len(aComment['replies']) != 0 else 1
         aComment['replies'].insert(0, aReply.toDic())
         self.saveNoticeBoards(self.__noticeBoards)
-
-
-
-
-
 
     # Updating both topic and description fields for the corresponding indexID when a notice board is modified
     # Runs saveNotices function once changes have been made
@@ -127,12 +112,6 @@ class NoticeManager:
                         self.__noticeBoards[_idx1]['notices'][_idx2]['description'] = aNotice.description
                         self.__noticeBoards[_idx1]['notices'][_idx2]['noticePriority'] = aNotice.noticePriority
         self.saveNoticeBoards(self.__noticeBoards)  
-
-
-
-    # !!!!! DONT WANT TO BE ABLE TO EDIT COMMENTS !!!!! 
-
-
 
     # Remove the associated notice from notice ids
     # Save changes by running saveNotices function

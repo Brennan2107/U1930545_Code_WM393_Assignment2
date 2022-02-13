@@ -5,22 +5,26 @@ from flask_login import LoginManager, login_required, login_user, logout_user, c
 from jsondb import NoticeManager
 from models import Notice, User, NoticeBoard, Comment, Reply
 
+# Available user profiles
 users = [
     {'U1010101': {'password': 'tutor', 'is_admin': True }},
     {'U1930545': {'password': 'student', 'is_admin': False }},
 ]
 
+# Chekcs that the entered user ID is in the list of users
 def checkUser(email):
     for user in users:
         if email in user:
             return user
     return None
 
+# LoginManager definitions
 app = Flask(__name__)
 app.secret_key = 'This is my secret string' 
 login_manager = LoginManager()
 login_manager.init_app(app)
 
+# Return the user for entered ID
 @login_manager.user_loader
 def user_loader(email):
     found = False
@@ -34,11 +38,12 @@ def user_loader(email):
     aUser.is_admin = user[email]['is_admin']
     return aUser
 
+# Redirect to login page if not a user
 @login_manager.unauthorized_handler
 def unauthorized_callback():
     return redirect('/login')
 
-
+# If user is authenticated take to noticeBoardHomePage
 @app.route('/')
 def index():
     if current_user.is_authenticated:
@@ -46,7 +51,7 @@ def index():
     else:
         return redirect(url_for('login'))
 
-
+# Verifies that the user password is correct for the user id passed in 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
@@ -70,14 +75,14 @@ def login():
     except Exception as e:
         return redirect(url_for('login'))
 
-
+# Logout functionality, redirect to login page
 @app.route('/logout')
 def logout():
     logout_user()
     return redirect(url_for('login'))
 
 
-# renders noticeBoardHomePage
+# renders noticeBoardHomePage by getting notice board from data.json file
 @app.route('/')
 @app.route('/noticeBoardHomePage')
 @login_required
@@ -86,7 +91,7 @@ def noticeBoardHomePage():
     noticeBoards = aDManager.getNoticeBoards()
     return render_template('noticeBoardHomePage.html', noticeBoards=noticeBoards)
 
-# renders the posts list for a specific notice board
+# renders the notice list for a specific notice board
 @app.route('/noticeList/<int:indexID>')
 @login_required
 def noticeList(indexID):
@@ -94,7 +99,7 @@ def noticeList(indexID):
     noticeBoard = aDManager.getNoticeBoard(indexID)
     return render_template('noticeList.html', noticeBoard=noticeBoard)
 
-# renders the detail view for a specific post on a specific notice board
+# renders the detail view for a specific notice on a specific notice board
 @app.route('/noticeCommentPage/<int:indexID>/<int:noticeID>')
 @login_required
 def noticeCommentPage(indexID, noticeID):
@@ -118,7 +123,7 @@ def noticeBoardEditor(indexID=None):
 
     return render_template('noticeBoardEditor.html', indexid=indexID, noticeBoard=aNoticeBoard)
 
-# renders the noticeEditor view to be able to create a new post on a specific board
+# renders the noticeEditor view to be able to create a new notice on a specific notice board
 @app.route('/noticeEditor/<int:indexID>')
 @app.route('/noticeEditor/<int:indexID>/<int:noticeID>')
 @login_required
@@ -134,8 +139,7 @@ def noticeEditor(indexID=None, noticeID=None):
 
     return render_template('noticeEditor.html', noticeBoard=aNoticeBoard, notice=aNotice)
 
-
-
+# saves a new notice board by taking the new title and moduleLink from text-entries and runs insertNoticeBoard function
 @app.route('/save', methods=['POST'])
 @login_required
 def save():
@@ -146,8 +150,7 @@ def save():
 
     return redirect(url_for('noticeBoardHomePage'))
 
-
-
+# saves a new notice board by taking the title and description from text-entries and runs insertNotice function
 @app.route('/savenotice/<int:indexID>', methods=['GET', 'POST'])
 @login_required
 def savenotice(indexID):
@@ -158,7 +161,7 @@ def savenotice(indexID):
 
     return redirect(url_for('noticeList', indexID=indexID))
 
-
+# updates a notice board for new title or moduleLink if an indexID is passed in
 @app.route('/update/<int:indexID>', methods=['GET', 'POST'])
 @login_required
 def update(indexID):
@@ -167,7 +170,7 @@ def update(indexID):
     aDManager.updateNoticeBoard(indexID, aNoticeBoard)
     return redirect(url_for('noticeBoardHomePage'))
 
-
+# updates a notice for current indexID and noticeID value
 @app.route('/updatenotice/<int:indexID>/<int:noticeID>', methods=['GET', 'POST'])
 @login_required
 def updatenotice(indexID, noticeID):
@@ -176,7 +179,7 @@ def updatenotice(indexID, noticeID):
     aDManager.updateNotice(indexID, noticeID, aNotice)
     return redirect(url_for('noticeList', indexID=indexID))
 
-
+# removes the notice board with id=indexID
 @app.route('/delete/<int:indexID>', methods=['GET'])
 @login_required
 def delete(indexID):
@@ -184,7 +187,7 @@ def delete(indexID):
     aDManager.deleteNoticeBoard(indexID)
     return redirect(url_for('noticeBoardHomePage'))
 
-
+# removes the notice linked to id=indexID and id=noticeID
 @app.route('/deletenotice/<int:indexID>/<int:noticeID>', methods=['GET'])
 @login_required
 def deletenotice(indexID, noticeID):
@@ -194,9 +197,6 @@ def deletenotice(indexID, noticeID):
 
 
 # When Reply button is clicked for a specific student's comment on a specific notice on a specific board, the specific replies window is opened for that comment
-
-
-# renders the reply window
 @app.route('/reply/<int:indexID>/<int:noticeID>/<int:commentID>')
 @login_required
 def reply(indexID, noticeID, commentID):
@@ -209,12 +209,7 @@ def reply(indexID, noticeID, commentID):
 
     return redirect(url_for('noticeCommentPage'))
 
-
-
-
-
-
-# Triggers the savecomment for a new comment to a post
+# Triggers the savecomment for a new comment to a notice
 @app.route('/savecomment/<int:indexID>/<int:noticeID>', methods=['GET', 'POST'])
 @login_required
 def savecomment(indexID, noticeID):
@@ -223,7 +218,6 @@ def savecomment(indexID, noticeID):
     aDManager.insertComment(indexID, noticeID, aComment)
     # Change this to redirect to detail page
     return redirect(url_for('noticeCommentPage', indexID=indexID, noticeID=noticeID))
-
 
 # Triggers the savereply for a new reply to a comment
 @app.route('/savereply/<int:indexID>/<int:noticeID>/<int:commentID>', methods=['GET', 'POST'])

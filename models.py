@@ -46,8 +46,6 @@ class Comment:
         # return {'id': self.id, 'comment': self.comment, 'date': self.date, 'replyStatus': self.replyStatus}
         return {'id': self.id, 'comment': self.comment, 'date': self.date,'replies': self.replies}
 
-    #'replies': self.replies - need to add this back into toDic
-
     # Define post metadata structure for storage
     @staticmethod
     def populate(row):
@@ -63,14 +61,11 @@ class Comment:
 class User(UserMixin):
     pass
 
-
-
-
 class Reply:
     def toDic(self):
         return {'id': self.id, 'reply': self.reply, 'date': self.date}
 
-    # Define post metadata structure for storage
+    # Define reply metadata structure for storage
     @staticmethod
     def populate(row):
         aReply = Reply()
@@ -80,6 +75,3 @@ class Reply:
 
         return aReply
        
-
-class User(UserMixin):
-    pass

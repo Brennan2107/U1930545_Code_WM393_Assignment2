@@ -147,8 +147,9 @@
                                             <i class="fas fa-bars"></i>
                                         </button>
                                         <div class="dropdown-menu">
+                                            <!-- Delete or update notice options -->
                                             <a class="dropdown-item" href="{{ url_for('noticeEditor', indexID=noticeBoard.id, noticeID=notice.id) }}">Update Notice</a>
-                                            <a class="dropdown-item alertnotice" index_id="{{ noticeBoard.id }}" notice_id="{{ notice.id }}" href="#">Delete Notice</a>
+                                            <a class="dropdown-item" href="{{ url_for('deletenotice', indexID=noticeBoard.id, noticeID=notice.id) }}">Delete Notice</a>
                                         </div>
                                     </div>
                                 </td>
@@ -163,29 +164,4 @@
     </div>
 </section>
 
-<!-- Delete Notice Board interface -->
-<link href="{{ url_for('static', filename='sweetalert2/sweetalert2.css') }}" rel="stylesheet">
-<script src="{{ url_for('static', filename='sweetalert2/sweetalert2.min.js') }}"></script>
-
-<script>
-    $(function() {
-        $('.alertnotice').click(function() {
-            var index_id = $(this).attr("index_id");
-            var notice_id = $(this).attr("notice_id");
-            Swal.fire({
-                title: "Are you sure?",
-                text: "Do you want to delete this discussion!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonText: "Yes, delete it!",
-                cancelButtonText: "No, cancel!",
-                reverseButtons: true
-            }).then((result) => {
-                if (result.value) {
-                    window.location = "{{ url_for('deletenotice', indexID=0, noticeID=999) }}".replace(/0/, index_id).replace(/999/, notice_id);
-                }
-            });
-        });
-    });
-</script>
 {% endblock content %}

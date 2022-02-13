@@ -1,20 +1,31 @@
 {% extends "layout.html" %} {% block content %}
+<!-- Links page to loginDesign css -->
 <link href="{{ url_for('static', filename='sweetalert2/loginDesign.css') }}" rel="stylesheet" >
+
+<!-- Container for the Login page overall tile-->
 <section class="container">
     <div class="card">
+
+        <!-- Tile header -->
         <div class="card-header bg-primary text-white">
             LOGIN PAGE
         </div>
             <div class="card-body">
                 <form action="{{ url_for('login') }}" method="post">
+
+                    <!-- Text entry for user ID -->
                     <div class="form-group">
                         <label>Enter your ID</label>
                         <input type="text" name="email" class="form-control">
                     </div>
+
+                    <!-- Text entry for user password -->
                     <div class="form-group">
                         <label>Password</label>
                         <input type="password" name="password" class="form-control">
                     </div>
+
+                    <!-- Login button -->
                     <input type="submit" class="btn btn-primary float-right" value="Log-in">
                 </form>
             </div>

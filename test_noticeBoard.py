@@ -7,17 +7,6 @@ from models import Comment
 from models import Reply
 from datetime import datetime
 
-
-# !!USERSTORYID: NOTICE_US1!! Test that notice board home page is loaded within 3s for students 
-#@pytest.mark.skip
-#def test_NoticeManager():
- #   aDManager = NoticeManager()
-  #  noticeboards = aDManager.getNoticeBoards()
-   # assert len(noticeboards) == 4
-    #assert len(noticeboards) == 5
-
-#@pytest.mark.skip
-
 class TestNoticeBoard:
 
     # Create new board and check if the number of boards increases by 1
