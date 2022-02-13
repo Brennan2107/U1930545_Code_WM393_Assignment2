@@ -46,7 +46,7 @@ class Comment:
         # return {'id': self.id, 'comment': self.comment, 'date': self.date, 'replyStatus': self.replyStatus}
         return {'id': self.id, 'comment': self.comment, 'date': self.date,'replies': self.replies}
 
-    # Define post metadata structure for storage
+    # Define comment metadata structure for storage
     @staticmethod
     def populate(row):
         aComment = Comment()
